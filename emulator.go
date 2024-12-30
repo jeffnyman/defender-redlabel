@@ -10,19 +10,19 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type App struct {
+type Emulator struct {
 	engine *game.Engine
 }
 
-func NewApp() *App {
-	app := &App{
+func NewApp() *Emulator {
+	app := &Emulator{
 		engine: game.NewEngine(),
 	}
 	app.engine.Init()
 	return app
 }
 
-func (app *App) Update() error {
+func (app *Emulator) Update() error {
 
 	if status := app.engine.Update(); status != game.OK {
 		return errors.New(fmt.Sprintf("%d", status))
@@ -30,14 +30,10 @@ func (app *App) Update() error {
 	return nil
 }
 
-func (app *App) Draw(screen *ebiten.Image) {
-
-	//s := fmt.Sprintf("%d", gl.PlayerLives)
-	//ebitenutil.DebugPrint(screen, s)
-
+func (app *Emulator) Draw(screen *ebiten.Image) {
 	app.engine.Draw(screen)
 }
 
-func (g *App) Layout(outsideWidth, outsideHeight int) (int, int) {
+func (g *Emulator) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return 320 * 5, 240 * 5
 }

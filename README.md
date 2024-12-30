@@ -25,11 +25,13 @@ That will generate a `defender-reblabel` executable file.
 This is currently an incomplete implementation based on how the logic is being generated, although it is workable in the sense that you can fly the ship around and shoot aliens! The controls are as follows:
 
 ```
-MOVE UP   = Up Arrow
-MOVE DOWN = Down Arrow
-REVERSE   = Space Bar
-THRUST    = Enter
-FIRE      = F
+MOVE UP     = Up Arrow
+MOVE DOWN   = Down Arrow
+REVERSE     = Space Bar
+THRUST      = Enter
+HYPERSPACE  = H
+FIRE LASER  = F
+SMART BOMB  = B
 ```
 
-There is some logic for dropping smart bombs (press `B`) and going into hyperspace (press `H`) but that logic is not currently working. The key bindings are currently set up in the `gl/gl.go` file if you want to change them.
+The key bindings are currently set up in the `gl/gl.go` file if you want to change them.

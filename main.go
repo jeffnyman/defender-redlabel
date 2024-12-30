@@ -22,5 +22,4 @@ func main() {
 	app := NewApp()
 	if err := ebiten.RunGame(app); err != nil {
 	}
-
 }
