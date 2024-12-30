@@ -15,23 +15,23 @@ type Emulator struct {
 }
 
 func NewApp() *Emulator {
-	app := &Emulator{
+	emulator := &Emulator{
 		engine: game.NewEngine(),
 	}
-	app.engine.Init()
-	return app
+	emulator.engine.Init()
+	return emulator
 }
 
-func (app *Emulator) Update() error {
+func (emulator *Emulator) Update() error {
 
-	if status := app.engine.Update(); status != game.OK {
+	if status := emulator.engine.Update(); status != game.OK {
 		return errors.New(fmt.Sprintf("%d", status))
 	}
 	return nil
 }
 
-func (app *Emulator) Draw(screen *ebiten.Image) {
-	app.engine.Draw(screen)
+func (emulator *Emulator) Draw(screen *ebiten.Image) {
+	emulator.engine.Draw(screen)
 }
 
 func (g *Emulator) Layout(outsideWidth, outsideHeight int) (int, int) {
