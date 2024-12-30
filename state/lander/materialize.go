@@ -9,21 +9,21 @@ import (
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
-type LanderMaterialise struct {
+type LanderMaterialize struct {
 	Name types.StateType
 }
 
-func NewLanderMaterialise() *LanderMaterialise {
-	return &LanderMaterialise{
-		Name: types.LanderMaterialise,
+func NewLanderMaterialize() *LanderMaterialize {
+	return &LanderMaterialize{
+		Name: types.LanderMaterialize,
 	}
 }
 
-func (s *LanderMaterialise) GetName() types.StateType {
+func (s *LanderMaterialize) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *LanderMaterialise) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *LanderMaterialize) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	pc.DX = 0
 	pc.DY = 0
@@ -32,7 +32,7 @@ func (s *LanderMaterialise) Enter(ai *cmp.AI, e types.IEntity) {
 	dc.Disperse = 300
 	rdc := e.GetComponent(types.RadarDraw).(*cmp.RadarDraw)
 	rdc.Hide = false
-	ev := event.NewMaterialise(e)
+	ev := event.NewMaterialize(e)
 	event.NotifyEvent(ev)
 
 	ai.Counter = 0
@@ -53,7 +53,7 @@ func (s *LanderMaterialise) Enter(ai *cmp.AI, e types.IEntity) {
 	}
 }
 
-func (s *LanderMaterialise) Update(ai *cmp.AI, e types.IEntity) {
+func (s *LanderMaterialize) Update(ai *cmp.AI, e types.IEntity) {
 	dc := e.GetComponent(types.Draw).(*cmp.Draw)
 	dc.Disperse -= 5
 

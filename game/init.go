@@ -154,7 +154,7 @@ func (e *Engine) addLander(count int) {
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(lander.NewLanderWait())
 	sgraph.AddState(lander.NewLanderSearch())
-	sgraph.AddState(lander.NewLanderMaterialise())
+	sgraph.AddState(lander.NewLanderMaterialize())
 	sgraph.AddState(lander.NewLanderDrop())
 	sgraph.AddState(lander.NewLanderGrab())
 	sgraph.AddState(lander.NewLanderMutate())
@@ -182,7 +182,7 @@ func (e *Engine) addBaiter(count int) {
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(baiter.NewBaiterWait())
-	sgraph.AddState(baiter.NewBaiterMaterialise())
+	sgraph.AddState(baiter.NewBaiterMaterialize())
 	sgraph.AddState(baiter.NewBaiterHunt())
 	sgraph.AddState(baiter.NewBaiterDie())
 
@@ -487,8 +487,8 @@ func (e *Engine) initEvents() {
 		}
 	}
 
-	materialise := func(ev event.IEvent) {
-		sound.PlayIfNot(sound.Materialise)
+	Materialize := func(ev event.IEvent) {
+		sound.PlayIfNot(sound.Materialize)
 	}
 
 	landerDie := func(ev event.IEvent) {
@@ -634,6 +634,6 @@ func (e *Engine) initEvents() {
 	event.AddEventListener(event.HumanDroppedEvent, HumanDropped)
 	event.AddEventListener(event.PlayerThrustEvent, thrustOn)
 	event.AddEventListener(event.PlayerStopThrustEvent, thrustOff)
-	event.AddEventListener(event.MaterialiseEvent, materialise)
+	event.AddEventListener(event.MaterializeEvent, Materialize)
 	event.AddEventListener(event.MutantSoundEvent, mutantSound)
 }

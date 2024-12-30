@@ -25,7 +25,7 @@ const (
 	Landerdie   SoundType = "landerdie"
 	Laser       SoundType = "laser"
 	Levelstart  SoundType = "levelstart"
-	Materialise SoundType = "materialise"
+	Materialize SoundType = "Materialize"
 	Mutant      SoundType = "mutant"
 	Placehuman  SoundType = "placehuman"
 	Poddie      SoundType = "poddie"
@@ -74,8 +74,8 @@ var laserWAV []byte
 //go:embed levelstart.wav
 var levelstartWAV []byte
 
-//go:embed materialise.wav
-var materialiseWAV []byte
+//go:embed materialize.wav
+var materializeWAV []byte
 
 //go:embed mutant.wav
 var mutantWAV []byte
@@ -111,7 +111,7 @@ func init() {
 	addSample(Landerdie, landerdieWAV, false)
 	addSample(Laser, laserWAV, false)
 	addSample(Levelstart, levelstartWAV, false)
-	addSample(Materialise, materialiseWAV, false)
+	addSample(Materialize, materializeWAV, false)
 	addSample(Mutant, mutantWAV, false)
 	addSample(Placehuman, placehumanWAV, false)
 	addSample(Poddie, poddieWAV, false)

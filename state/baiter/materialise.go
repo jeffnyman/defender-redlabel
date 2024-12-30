@@ -6,21 +6,21 @@ import (
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
-type BaiterMaterialise struct {
+type BaiterMaterialize struct {
 	Name types.StateType
 }
 
-func NewBaiterMaterialise() *BaiterMaterialise {
-	return &BaiterMaterialise{
-		Name: types.BaiterMaterialise,
+func NewBaiterMaterialize() *BaiterMaterialize {
+	return &BaiterMaterialize{
+		Name: types.BaiterMaterialize,
 	}
 }
 
-func (s *BaiterMaterialise) GetName() types.StateType {
+func (s *BaiterMaterialize) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *BaiterMaterialise) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *BaiterMaterialize) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	pc.DY = 0
 	dc := e.GetComponent(types.Draw).(*cmp.Draw)
@@ -28,11 +28,11 @@ func (s *BaiterMaterialise) Enter(ai *cmp.AI, e types.IEntity) {
 	dc.Disperse = 300
 	rdc := e.GetComponent(types.RadarDraw).(*cmp.RadarDraw)
 	rdc.Hide = false
-	ev := event.NewMaterialise(e)
+	ev := event.NewMaterialize(e)
 	event.NotifyEvent(ev)
 }
 
-func (s *BaiterMaterialise) Update(ai *cmp.AI, e types.IEntity) {
+func (s *BaiterMaterialize) Update(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	pc.DX = e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos).DX
 	dc := e.GetComponent(types.Draw).(*cmp.Draw)

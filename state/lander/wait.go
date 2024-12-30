@@ -30,6 +30,6 @@ func (s *LanderWait) Update(ai *cmp.AI, e types.IEntity) {
 	ai.Wait--
 
 	if ai.Wait <= 0 {
-		ai.NextState = types.LanderMaterialise
+		ai.NextState = types.LanderMaterialize
 	}
 }

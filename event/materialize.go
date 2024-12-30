@@ -1,21 +1,21 @@
 package event
 
-type Materialise struct {
+type Materialize struct {
 	mytype  EventType
 	payload interface{}
 }
 
-func NewMaterialise(p interface{}) *Materialise {
-	return &Materialise{
-		mytype:  MaterialiseEvent,
+func NewMaterialize(p interface{}) *Materialize {
+	return &Materialize{
+		mytype:  MaterializeEvent,
 		payload: p,
 	}
 }
 
-func (ev *Materialise) GetType() EventType {
+func (ev *Materialize) GetType() EventType {
 	return ev.mytype
 }
 
-func (ev *Materialise) GetPayload() interface{} {
+func (ev *Materialize) GetPayload() interface{} {
 	return ev.payload
 }

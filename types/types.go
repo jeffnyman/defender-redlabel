@@ -72,13 +72,13 @@ func (et EntityType) String() string {
 
 const (
 	LanderWait        StateType = iota
-	LanderMaterialise StateType = iota
+	LanderMaterialize StateType = iota
 	LanderSearch      StateType = iota
 	LanderDrop        StateType = iota
 	LanderGrab        StateType = iota
 	LanderMutate      StateType = iota
 	LanderDie         StateType = iota
-	BaiterMaterialise StateType = iota
+	BaiterMaterialize StateType = iota
 	BaiterWait        StateType = iota
 	BaiterHunt        StateType = iota
 	BaiterDie         StateType = iota
@@ -106,8 +106,8 @@ func (st StateType) String() string {
 	switch st {
 	case LanderWait:
 		return "Lander-Wait"
-	case LanderMaterialise:
-		return "Lander-Materialise"
+	case LanderMaterialize:
+		return "Lander-Materialize"
 	case LanderSearch:
 		return "Lander-Search"
 	case LanderDrop:
@@ -120,8 +120,8 @@ func (st StateType) String() string {
 		return "Lander-Die"
 	case BaiterWait:
 		return "Baiter-Wait"
-	case BaiterMaterialise:
-		return "Baiter-Materialise"
+	case BaiterMaterialize:
+		return "Baiter-Materialize"
 	case BaiterHunt:
 		return "Baiter-Search"
 	case BaiterDie:

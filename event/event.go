@@ -34,7 +34,7 @@ const (
 	HumanRescuedEvent     EventType = iota
 	HumanSavedEvent       EventType = iota
 	HumanLandedEvent      EventType = iota
-	MaterialiseEvent      EventType = iota
+	MaterializeEvent      EventType = iota
 	PlayerExplodeEvent    EventType = iota
 )
 
@@ -85,8 +85,8 @@ func (ev EventType) String() string {
 		return "HumanSavedEvent"
 	case HumanLandedEvent:
 		return "HumanLandedEvent"
-	case MaterialiseEvent:
-		return "MaterialiseEvent"
+	case MaterializeEvent:
+		return "MaterializeEvent"
 	case PlayerExplodeEvent:
 		return "PlayerExplodeEvent"
 	}
