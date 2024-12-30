@@ -4,7 +4,7 @@
 
 </h1>
 
-<p align="center"><strong>RED LABEL</strong></p>
+<p align="center"><strong>RED LABEL VERSION</strong></p>
 
 <p align="center">
 
@@ -20,4 +20,16 @@ This is a Go project, so all you should have to do once you have [Go installed o
 go build
 ```
 
-That will generate a `defender-reblabel.exe` file.
+That will generate a `defender-reblabel` executable file.
+
+This is currently an incomplete implementation based on how the logic is being generated, although it is workable in the sense that you can fly the ship around and shoot aliens! The controls are as follows:
+
+```
+MOVE UP   = Up Arrow
+MOVE DOWN = Down Arrow
+REVERSE   = Space Bar
+THRUST    = Enter
+FIRE      = F
+```
+
+There is some logic for dropping smart bombs (press `B`) and going into hyperspace (press `H`) but that logic is not currently working. The key bindings are currently set up in the `gl/gl.go` file if you want to change them.
