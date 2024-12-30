@@ -14,7 +14,7 @@ type Emulator struct {
 	engine *game.Engine
 }
 
-func NewApp() *Emulator {
+func NewEmulator() *Emulator {
 	emulator := &Emulator{
 		engine: game.NewEngine(),
 	}

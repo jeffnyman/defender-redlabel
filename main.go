@@ -19,7 +19,7 @@ func main() {
 	ebiten.SetFullscreen(true)
 	ebiten.SetMaxTPS(gl.MaxTPS)
 
-	app := NewApp()
-	if err := ebiten.RunGame(app); err != nil {
+	emulator := NewEmulator()
+	if err := ebiten.RunGame(emulator); err != nil {
 	}
 }
