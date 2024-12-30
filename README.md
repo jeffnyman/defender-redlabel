@@ -20,7 +20,7 @@ This is a Go project, so all you should have to do once you have [Go installed o
 go build
 ```
 
-That will generate a `defender-reblabel` executable file.
+That will generate a `defender-redlabel` executable file.
 
 This is currently an incomplete implementation based on how the logic is being generated, although it is workable in the sense that you can fly the ship around and shoot aliens! The controls are as follows:
 
