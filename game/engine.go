@@ -7,8 +7,8 @@ import (
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/logger"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -358,7 +358,7 @@ func (eng *Engine) SmartBomb() {
 		if e.Active() && e.GetClass() != types.Human {
 			pc := e.GetComponent(types.Pos).(*cmp.Pos)
 
-			if !util.OffScreen(util.ScreenX(pc.X), pc.Y) {
+			if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) {
 				eng.Kill(e)
 			}
 		}

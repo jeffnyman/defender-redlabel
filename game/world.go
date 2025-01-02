@@ -5,7 +5,7 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/gl"
-	"github.com/jeffnyman/defender-redlabel/util"
+	"github.com/jeffnyman/defender-redlabel/physics"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -55,7 +55,7 @@ func NewWorld(engine *Engine) *World {
 		}
 
 		w.points[i] = y
-		dy := util.RandChoiceF([]float64{0, 1, 1})
+		dy := physics.RandChoiceF([]float64{0, 1, 1})
 		y += dy
 	}
 

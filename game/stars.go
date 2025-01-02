@@ -5,8 +5,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -83,7 +83,7 @@ func (s *Stars) Draw(screen *ebiten.Image) {
 	for _, p := range s.plist {
 		screenX := p.x - gl.CameraX()/4
 
-		if util.OffScreen(screenX, p.y) {
+		if physics.OffScreen(screenX, p.y) {
 			continue
 		}
 

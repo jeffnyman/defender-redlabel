@@ -7,8 +7,8 @@ import (
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/graphics"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 )
 
 type LanderMutate struct {
@@ -59,9 +59,9 @@ func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
 	if ai.Counter > 2 {
 		ai.Counter = 0
 
-		pc.DY = util.RandChoiceF([]float64{-gs, 0, gs})
-		pc.X += util.RandChoiceF([]float64{-20, 0, 20})
-		pc.Y += util.RandChoiceF([]float64{-20, 0, 20})
+		pc.DY = physics.RandChoiceF([]float64{-gs, 0, gs})
+		pc.X += physics.RandChoiceF([]float64{-20, 0, 20})
+		pc.Y += physics.RandChoiceF([]float64{-20, 0, 20})
 	}
 
 	ai.Scratch++
@@ -73,10 +73,10 @@ func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
 	}
 
 	// TODO gl bullet rate
-	if !util.OffScreen(util.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
+	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
 		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
 		bullettime := gl.CurrentLevel().BulletTime
-		dx, dy := util.ComputeBullet(pc, tc, bullettime)
+		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
 		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)
 	}

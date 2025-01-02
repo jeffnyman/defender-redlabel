@@ -7,8 +7,8 @@ import (
 
 	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/logger"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -64,13 +64,13 @@ func (ds *DrawSystem) process(dc *cmp.Draw, e types.IEntity, screen *ebiten.Imag
 	op := dc.Opts
 	frames := dc.SpriteMap.Anim_frames
 	fw, fh := dc.SpriteMap.Frame.W/frames, dc.SpriteMap.Frame.H
-	screenx := util.ScreenX(pc.X) - float64(fw)/2
+	screenx := physics.ScreenX(pc.X) - float64(fw)/2
 
 	if pc.ScreenCoords {
 		screenx = pc.X
 	}
 
-	if util.OffScreen(screenx, pc.Y) {
+	if physics.OffScreen(screenx, pc.Y) {
 		return
 	}
 

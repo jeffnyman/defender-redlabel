@@ -7,8 +7,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/logger"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -74,7 +74,7 @@ func (lds *LaserDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
 		lds.opts.GeoM.Scale(lasmov.Length, 4)
 	}
 
-	sx := util.ScreenX(pc.X)
+	sx := physics.ScreenX(pc.X)
 	lds.opts.GeoM.Translate(sx, pc.Y)
 	screen.DrawImage(lds.img, lds.opts)
 
@@ -108,7 +108,7 @@ func (lds *LaserDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
 
 	pc.X += pc.DX * 1.5
 
-	if util.OffScreen(sx, pc.Y) {
+	if physics.OffScreen(sx, pc.Y) {
 		e.SetActive(false)
 	}
 }

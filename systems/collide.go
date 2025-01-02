@@ -3,11 +3,11 @@ package systems
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
 	"github.com/jeffnyman/defender-redlabel/event"
+	"github.com/jeffnyman/defender-redlabel/physics"
 
 	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -59,7 +59,7 @@ func (cs *CollideSystem) process(e types.IEntity, player types.IEntity) {
 	ppos := player.GetComponent(types.Pos).(*cmp.Pos)
 	psh := player.GetComponent(types.Ship).(*cmp.Ship)
 
-	if util.Collide(ppos.X, ppos.Y, psh.W, psh.H, ep.X, ep.Y, ec.W, ec.H) {
+	if physics.Collide(ppos.X, ppos.Y, psh.W, psh.H, ep.X, ep.Y, ec.W, ec.H) {
 		ev := event.NewPlayerCollide(e)
 		event.NotifyEvent(ev)
 	}

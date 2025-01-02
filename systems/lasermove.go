@@ -7,8 +7,8 @@ import (
 
 	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/logger"
+	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
-	"github.com/jeffnyman/defender-redlabel/util"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -62,7 +62,7 @@ func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 
 	var h2 float64 = 4
 	y2 := lpc.Y
-	x2 := util.ScreenX(lpc.X)
+	x2 := physics.ScreenX(lpc.X)
 	w2 := lmc.Length
 
 	if psc.Direction == -1 {
@@ -71,10 +71,10 @@ func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 
 	for _, v := range laserEnt.GetEngine().GetEntitiesWithComponent(types.Shootable) {
 		tpc := v.GetComponent(types.Pos).(*cmp.Pos)
-		x1 := util.ScreenX(tpc.X)
+		x1 := physics.ScreenX(tpc.X)
 		y1 := tpc.Y
 
-		if util.OffScreen(x1, tpc.Y) {
+		if physics.OffScreen(x1, tpc.Y) {
 			continue
 		}
 
@@ -83,7 +83,7 @@ func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 			w1 := tcc.W
 			h1 := tcc.H
 
-			if util.Collide(x1, y1, w1, h1, x2, y2, w2, h2) {
+			if physics.Collide(x1, y1, w1, h1, x2, y2, w2, h2) {
 				laserEnt.SetActive(false)
 				laserEnt.GetEngine().Kill(v)
 			}
