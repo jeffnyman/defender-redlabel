@@ -3,7 +3,7 @@ package gamestate
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -26,10 +26,10 @@ func (s *GamePlay) Enter(ai *cmp.AI, e types.IEntity) {
 
 func (s *GamePlay) Update(ai *cmp.AI, e types.IEntity) {
 
-	if gl.LandersKilled == gl.CurrentLevel().LanderCount {
+	if defs.LandersKilled == defs.CurrentLevel().LanderCount {
 		ai.NextState = types.GameLevelEnd
 	}
-	if gl.PlayerLives == 0 {
+	if defs.PlayerLives == 0 {
 		ai.NextState = types.GameOver
 	}
 

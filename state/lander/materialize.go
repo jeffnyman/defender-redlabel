@@ -4,8 +4,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -46,7 +46,7 @@ func (s *LanderMaterialize) Enter(ai *cmp.AI, e types.IEntity) {
 			if humpos.X-pc.X < 4000 {
 				e.SetChild(hum.GetID())
 				hum.SetParent(e.GetID())
-				pc.X = humpos.X - rand.Float64()*2*gl.ScreenWidth
+				pc.X = humpos.X - rand.Float64()*2*defs.ScreenWidth
 				break
 			}
 		}

@@ -1,4 +1,4 @@
-package gl
+package defs
 
 import "github.com/jeffnyman/defender-redlabel/types"
 

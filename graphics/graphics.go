@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"image"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -61,7 +61,7 @@ func Load() {
 	}
 
 	for _, v := range spritedata.Frames {
-		v.Ticks_per_frame /= 60 / gl.MaxTPS
+		v.Ticks_per_frame /= 60 / defs.MaxTPS
 		spriteMap[v.Filename] = v
 	}
 

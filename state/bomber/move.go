@@ -4,7 +4,7 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -24,14 +24,14 @@ func (s *BomberMove) GetName() types.StateType {
 
 func (s *BomberMove) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
-	pc.DX = gl.BomberSpeed
-	pc.DY = -gl.BomberSpeed
+	pc.DX = defs.BomberSpeed
+	pc.DY = -defs.BomberSpeed
 }
 
 func (s *BomberMove) Update(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 
-	if pc.Y < gl.ScreenTop+50 || pc.Y > gl.ScreenHeight-100 {
+	if pc.Y < defs.ScreenTop+50 || pc.Y > defs.ScreenHeight-100 {
 		pc.DY = -pc.DY
 	}
 

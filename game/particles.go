@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -130,7 +130,7 @@ func (s *ParticleSystem) Draw(screen *ebiten.Image) {
 	for _, p := range s.activeList {
 		p.opts.GeoM.Reset()
 		p.opts.GeoM.Scale(p.scale, p.scale)
-		screenX := p.x - gl.CameraX()
+		screenX := p.x - defs.CameraX()
 		p.opts.GeoM.Translate(screenX, p.y)
 		p.opts.ColorM.Reset()
 		p.opts.ColorM.Scale(p.color.R, p.color.G, p.color.B, 1)

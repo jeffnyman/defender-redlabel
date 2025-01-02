@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
 
@@ -43,9 +43,9 @@ func NewStars(engine *Engine) *Stars {
 		p := &star{
 			active:      false,
 			ticksToLive: rand.Intn(30),
-			x:           rand.Float64() * gl.WorldWidth,
-			y:           gl.ScreenTop + rand.Float64()*(gl.ScreenHeight/2),
-			color:       gl.Cols[rand.Intn(5)],
+			x:           rand.Float64() * defs.WorldWidth,
+			y:           defs.ScreenTop + rand.Float64()*(defs.ScreenHeight/2),
+			color:       defs.Cols[rand.Intn(5)],
 			image:       starsImg,
 			opts:        &ebiten.DrawImageOptions{},
 		}
@@ -68,8 +68,8 @@ func (s *Stars) Update() {
 		p.ticksToLive--
 
 		if p.ticksToLive == 0 {
-			p.x = rand.Float64() * gl.WorldWidth
-			p.y = gl.ScreenTop + rand.Float64()*(gl.ScreenHeight/2)
+			p.x = rand.Float64() * defs.WorldWidth
+			p.y = defs.ScreenTop + rand.Float64()*(defs.ScreenHeight/2)
 			p.ticksToLive = rand.Intn(60) + 30
 		}
 	}
@@ -81,7 +81,7 @@ func (s *Stars) Draw(screen *ebiten.Image) {
 	}
 
 	for _, p := range s.plist {
-		screenX := p.x - gl.CameraX()/4
+		screenX := p.x - defs.CameraX()/4
 
 		if physics.OffScreen(screenX, p.y) {
 			continue

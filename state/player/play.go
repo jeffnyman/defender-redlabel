@@ -2,8 +2,8 @@ package player
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/types"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -25,7 +25,7 @@ func (s *PlayerPlay) GetName() types.StateType {
 
 func (s *PlayerPlay) Enter(ai *cmp.AI, e types.IEntity) {
 	sc := e.GetComponent(types.Ship).(*cmp.Ship)
-	sc.ScreenOffset = gl.ScreenWidth * 0.1
+	sc.ScreenOffset = defs.ScreenWidth * 0.1
 	ev := event.NewStart(e)
 	event.NotifyEvent(ev)
 }
@@ -35,21 +35,21 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 	sc := e.GetComponent(types.Ship).(*cmp.Ship)
 	dc := e.GetComponent(types.Draw).(*cmp.Draw)
 
-	if sc.Direction == 1 && sc.ScreenOffset > gl.ScreenWidth*0.1 {
+	if sc.Direction == 1 && sc.ScreenOffset > defs.ScreenWidth*0.1 {
 		sc.ScreenOffset -= 30
 	}
 
-	if sc.Direction == -1 && sc.ScreenOffset < gl.ScreenWidth*0.9 {
+	if sc.Direction == -1 && sc.ScreenOffset < defs.ScreenWidth*0.9 {
 		sc.ScreenOffset += 30
 	}
 
 	camx := (pc.X - sc.ScreenOffset)
 
 	if camx < 0 {
-		camx += gl.WorldWidth
+		camx += defs.WorldWidth
 	}
 
-	gl.SetCameraX(camx)
+	defs.SetCameraX(camx)
 
 	fle := e.GetEngine().GetEntity(e.Child())
 	flpc := fle.GetComponent(types.Pos).(*cmp.Pos)
@@ -65,7 +65,7 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 
 	fdc := fle.GetComponent(types.Draw).(*cmp.Draw)
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.Reverse]) {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.Reverse]) {
 		if !sc.ReversePressed {
 			sc.Direction = -sc.Direction
 			dc.FlipX = !dc.FlipX
@@ -77,7 +77,7 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 		sc.ReversePressed = false
 	}
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.Thrust]) {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.Thrust]) {
 		if !sc.ThrustPressed {
 			sc.ThrustPressed = true
 			ev := event.NewPlayerThrust(e)
@@ -96,29 +96,29 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 		pc.DX /= 1.05
 	}
 
-	if pc.DX > gl.PlayerSpeedX {
-		pc.DX = gl.PlayerSpeedX
+	if pc.DX > defs.PlayerSpeedX {
+		pc.DX = defs.PlayerSpeedX
 	}
 
-	if pc.DX < -gl.PlayerSpeedX {
-		pc.DX = -gl.PlayerSpeedX
+	if pc.DX < -defs.PlayerSpeedX {
+		pc.DX = -defs.PlayerSpeedX
 	}
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.Up]) && ebiten.IsKeyPressed(gl.KeyMap[types.Down]) {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.Up]) && ebiten.IsKeyPressed(defs.KeyMap[types.Down]) {
 		pc.DY = 0
-	} else if ebiten.IsKeyPressed(gl.KeyMap[types.Up]) {
-		if pc.DY > -gl.PlayerSpeedY {
+	} else if ebiten.IsKeyPressed(defs.KeyMap[types.Up]) {
+		if pc.DY > -defs.PlayerSpeedY {
 			pc.DY -= 2
 		}
-	} else if ebiten.IsKeyPressed(gl.KeyMap[types.Down]) {
-		if pc.DY < gl.PlayerSpeedY {
+	} else if ebiten.IsKeyPressed(defs.KeyMap[types.Down]) {
+		if pc.DY < defs.PlayerSpeedY {
 			pc.DY += 2
 		}
 	} else {
 		pc.DY = 0
 	}
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.Fire]) {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.Fire]) {
 		if !sc.FirePressed {
 			sc.FirePressed = true
 			ev := event.NewPlayerFire(e)
@@ -128,8 +128,8 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 		sc.FirePressed = false
 	}
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.SmartBomb]) {
-		if gl.SmartBombs == 0 {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.SmartBomb]) {
+		if defs.SmartBombs == 0 {
 			return
 		}
 		if !sc.SmartBombPressed {
@@ -138,13 +138,13 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 			event.NotifyEvent(ev)
 			event.NotifyEventDelay(ev, 5)
 			event.NotifyEventDelay(ev, 10)
-			gl.SmartBombs--
+			defs.SmartBombs--
 		}
 	} else {
 		sc.SmartBombPressed = false
 	}
 
-	if ebiten.IsKeyPressed(gl.KeyMap[types.HyperSpace]) {
+	if ebiten.IsKeyPressed(defs.KeyMap[types.HyperSpace]) {
 		if !sc.HyperSpacePressed {
 			sc.HyperSpacePressed = true
 			ev := event.NewPlayerDie(e)

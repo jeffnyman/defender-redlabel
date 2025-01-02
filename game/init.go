@@ -9,7 +9,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/graphics"
 	"github.com/jeffnyman/defender-redlabel/sound"
 	"github.com/jeffnyman/defender-redlabel/state/baiter"
@@ -43,7 +43,7 @@ func (e *Engine) Init() {
 	e.initEvents()
 	e.initHUD()
 
-	gl.ScoreCharId = e.AddString("       0", 50, 80)
+	defs.ScoreCharId = e.AddString("       0", 50, 80)
 }
 
 func (e *Engine) initSystems() {
@@ -59,25 +59,25 @@ func (e *Engine) initSystems() {
 }
 
 func (e *Engine) InitEnemies() {
-	for i := 0; i < gl.CurrentLevel().LanderCount; i++ {
+	for i := 0; i < defs.CurrentLevel().LanderCount; i++ {
 		e.addLander(i)
 	}
 
-	for i := 0; i < gl.CurrentLevel().BaiterCount; i++ {
+	for i := 0; i < defs.CurrentLevel().BaiterCount; i++ {
 		e.addBaiter(i)
 	}
 
-	for i := 0; i < gl.CurrentLevel().BomberCount; i++ {
+	for i := 0; i < defs.CurrentLevel().BomberCount; i++ {
 		e.addBomber(i)
 	}
 
-	for i := 0; i < gl.CurrentLevel().PodCount; i++ {
+	for i := 0; i < defs.CurrentLevel().PodCount; i++ {
 		e.addPod(i)
 	}
 }
 
 func (e *Engine) InitHumans() {
-	for i := 0; i < gl.CurrentLevel().HumanCount; i++ {
+	for i := 0; i < defs.CurrentLevel().HumanCount; i++ {
 		e.addHuman(i)
 	}
 }
@@ -102,11 +102,11 @@ func (e *Engine) addGame() {
 func (e *Engine) addPlayer() {
 	ssheet := graphics.GetSpriteSheet()
 	plEnt := NewEntity(e, types.Player)
-	gl.PlayerID = plEnt.Id
+	defs.PlayerID = plEnt.Id
 	plEnt.SetActive(true)
 
-	x := float64(gl.WorldWidth) / 2
-	y := float64(gl.ScreenHeight) / 2
+	x := float64(defs.WorldWidth) / 2
+	y := float64(defs.ScreenHeight) / 2
 
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(player.NewPlayerPlay())
@@ -143,13 +143,13 @@ func (e *Engine) addLander(count int) {
 	ent := NewEntity(e, types.Lander)
 	ent.SetActive(true)
 
-	x := rand.Float64() * gl.WorldWidth
+	x := rand.Float64() * defs.WorldWidth
 
 	if count < 2 {
-		x = gl.WorldWidth * 0.8
+		x = defs.WorldWidth * 0.8
 	}
 
-	pc := cmp.NewPos(x, gl.ScreenTop+500*rand.Float64(), 0, 0)
+	pc := cmp.NewPos(x, defs.ScreenTop+500*rand.Float64(), 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(lander.NewLanderWait())
@@ -206,10 +206,10 @@ func (e *Engine) addHuman(count int) {
 	ent := NewEntity(e, types.Human)
 	ent.SetActive(true)
 
-	x := rand.Float64() * gl.WorldWidth
+	x := rand.Float64() * defs.WorldWidth
 
 	if count < 2 {
-		x = rand.Float64()*gl.ScreenWidth + gl.CameraX()
+		x = rand.Float64()*defs.ScreenWidth + defs.CameraX()
 	}
 
 	pc := cmp.NewPos(x, 0, 0, 0)
@@ -241,8 +241,8 @@ func (e *Engine) addBomber(count int) {
 	ent := NewEntity(e, types.Bomber)
 	ent.SetActive(true)
 
-	x := (rand.Float64() * gl.ScreenWidth) + gl.WorldWidth/3
-	y := (rand.Float64() * gl.ScreenHeight / 2) + gl.ScreenTop + 50
+	x := (rand.Float64() * defs.ScreenWidth) + defs.WorldWidth/3
+	y := (rand.Float64() * defs.ScreenHeight / 2) + defs.ScreenTop + 50
 
 	pc := cmp.NewPos(x, y, 0, 0)
 	ent.AddComponent(pc)
@@ -278,8 +278,8 @@ func (e *Engine) addPod(count int) {
 	ent := NewEntity(e, types.Pod)
 	ent.SetActive(true)
 
-	x := (rand.Float64() * gl.ScreenWidth) + gl.WorldWidth/2
-	y := (rand.Float64() * gl.ScreenHeight / 2) + gl.ScreenTop + 50
+	x := (rand.Float64() * defs.ScreenWidth) + defs.WorldWidth/2
+	y := (rand.Float64() * defs.ScreenHeight / 2) + defs.ScreenTop + 50
 
 	pc := cmp.NewPos(x, y, 0, 0)
 	ent.AddComponent(pc)
@@ -337,7 +337,7 @@ func (e *Engine) AddScoreSprite(ev event.IEvent) {
 
 	ent := NewEntity(e, types.Score)
 	ent.SetActive(true)
-	pc := cmp.NewPos(evpc.X-gl.CameraX(), evpc.Y, 0, 0)
+	pc := cmp.NewPos(evpc.X-defs.CameraX(), evpc.Y, 0, 0)
 	pc.ScreenCoords = true
 	ent.AddComponent(pc)
 	s := "500.png"
@@ -420,7 +420,7 @@ func (e *Engine) initHUD() {
 		smap := graphics.GetSpriteMap("shiplife.png")
 		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		dr.Scale = 0.8
-		if i >= gl.PlayerLives {
+		if i >= defs.PlayerLives {
 			dr.Hide = true
 		}
 		ent.AddComponent(dr)
@@ -436,7 +436,7 @@ func (e *Engine) initHUD() {
 		smap := graphics.GetSpriteMap("smartbomb.png")
 		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		dr.Scale = 0.8
-		if i >= gl.SmartBombs {
+		if i >= defs.SmartBombs {
 			dr.Hide = true
 		}
 		ent.AddComponent(dr)
@@ -492,9 +492,9 @@ func (e *Engine) initEvents() {
 	}
 
 	landerDie := func(ev event.IEvent) {
-		gl.Score += 150
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
-		gl.LandersKilled++
+		defs.Score += 150
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
+		defs.LandersKilled++
 		sound.Stop(sound.Laser)
 		sound.Play(sound.Landerdie)
 	}
@@ -504,9 +504,9 @@ func (e *Engine) initEvents() {
 	}
 
 	humanDie := func(ev event.IEvent) {
-		gl.HumansKilled++
+		defs.HumansKilled++
 
-		if gl.HumansKilled == gl.CurrentLevel().HumanCount {
+		if defs.HumansKilled == defs.CurrentLevel().HumanCount {
 			e.ExplodeWorld()
 			e.SetFlash(30)
 			e.MutateAll()
@@ -516,14 +516,14 @@ func (e *Engine) initEvents() {
 	}
 
 	bomberDie := func(ev event.IEvent) {
-		gl.Score += 250
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 250
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 		sound.Stop(sound.Laser)
 		sound.Play(sound.Bomberdie)
 	}
 
 	playerDie := func(ev event.IEvent) {
-		pe := e.GetEntities()[gl.PlayerID]
+		pe := e.GetEntities()[defs.PlayerID]
 		pai := pe.GetComponent(types.AI).(*cmp.AI)
 		pai.NextState = types.PlayerDie
 	}
@@ -554,12 +554,12 @@ func (e *Engine) initEvents() {
 	}
 
 	podDie := func(ev event.IEvent) {
-		gl.Score += 1000
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 1000
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 		ent := ev.GetPayload().(*Entity)
 		pc := ent.GetComponent(types.Pos).(*cmp.Pos)
 
-		for i := 0; i < gl.CurrentLevel().SwarmerCount; i++ {
+		for i := 0; i < defs.CurrentLevel().SwarmerCount; i++ {
 			e.AddSwarmer(i, pc.X, pc.Y)
 		}
 
@@ -568,13 +568,13 @@ func (e *Engine) initEvents() {
 	}
 
 	swarmerDie := func(ev event.IEvent) {
-		gl.Score += 150
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 150
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 	}
 
 	baiterDie := func(ev event.IEvent) {
-		gl.Score += 200
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 200
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 		sound.Play(sound.Baiterdie)
 	}
 
@@ -588,21 +588,21 @@ func (e *Engine) initEvents() {
 
 	humanRescued := func(ev event.IEvent) {
 		e.AddScoreSprite(ev)
-		gl.Score += 500
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 500
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 	}
 
 	humanSaved := func(ev event.IEvent) {
 		e.AddScoreSprite(ev)
-		gl.Score += 500
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 500
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 		sound.Play(sound.Placehuman)
 	}
 
 	humanLanded := func(ev event.IEvent) {
 		e.AddScoreSprite(ev)
-		gl.Score += 250
-		e.ChangeString(gl.ScoreCharId, fmt.Sprintf("%8d", gl.Score))
+		defs.Score += 250
+		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 	}
 
 	thrustOn := func(ev event.IEvent) {

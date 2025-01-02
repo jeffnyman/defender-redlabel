@@ -4,8 +4,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -29,7 +29,7 @@ func (s *BaiterHunt) Enter(ai *cmp.AI, e types.IEntity) {
 }
 
 func (s *BaiterHunt) Update(ai *cmp.AI, e types.IEntity) {
-	gs := float64(gl.BaiterSpeed)
+	gs := float64(defs.BaiterSpeed)
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	ple := e.GetEngine().GetPlayer()
 	plpos := ple.GetComponent(types.Pos).(*cmp.Pos)
@@ -47,7 +47,7 @@ func (s *BaiterHunt) Update(ai *cmp.AI, e types.IEntity) {
 
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(50) == 0 {
 		plp := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
-		bullettime := gl.CurrentLevel().BulletTime
+		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, plp, bullettime/2)
 		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)

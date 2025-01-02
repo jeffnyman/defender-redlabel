@@ -4,7 +4,7 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -28,11 +28,11 @@ func (s *BaiterWait) Enter(ai *cmp.AI, e types.IEntity) {
 }
 
 func (s *BaiterWait) Update(ai *cmp.AI, e types.IEntity) {
-	if gl.CurrentLevel().LanderCount-gl.LandersKilled < 3 {
+	if defs.CurrentLevel().LanderCount-defs.LandersKilled < 3 {
 		ai.NextState = types.BaiterMaterialize
 		pc := e.GetComponent(types.Pos).(*cmp.Pos)
-		pc.Y = gl.ScreenHeight / 2
-		pc.X = gl.CameraX() + rand.Float64()*gl.ScreenWidth
+		pc.Y = defs.ScreenHeight / 2
+		pc.X = defs.CameraX() + rand.Float64()*defs.ScreenWidth
 		pc.DX = e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos).DX
 	}
 }

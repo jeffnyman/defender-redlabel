@@ -5,7 +5,7 @@ import (
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/physics"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
 
@@ -42,7 +42,7 @@ func (cs *CollideSystem) Update() {
 		return
 	}
 
-	pe := cs.engine.GetEntities()[gl.PlayerID]
+	pe := cs.engine.GetEntities()[defs.PlayerID]
 
 	for _, e := range cs.targets {
 		if e.Active() && !e.Paused() {

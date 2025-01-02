@@ -2,8 +2,8 @@ package player
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/graphics"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -49,7 +49,7 @@ func (s *PlayerDie) Update(ai *cmp.AI, e types.IEntity) {
 	}
 
 	if ai.Counter == 180 {
-		gl.PlayerLives--
+		defs.PlayerLives--
 		ai.NextState = types.PlayerPlay
 		dc.Hide = false
 		dc.SpriteMap = graphics.GetSpriteMap("ship.png")

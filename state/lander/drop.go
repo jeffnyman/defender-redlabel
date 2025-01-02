@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -25,7 +25,7 @@ func (s *LanderDrop) GetName() types.StateType {
 func (s *LanderDrop) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	pc.DX = 0
-	pc.DY = 1.2 * gl.LanderSpeed
+	pc.DY = 1.2 * defs.LanderSpeed
 	ai.Counter = 0
 	te := e.GetEngine().GetEntity(e.Child())
 	tpc := te.GetComponent(types.Pos).(*cmp.Pos)

@@ -5,13 +5,13 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 )
 
 func ScreenX(x float64) float64 {
-	ww := float64(gl.WorldWidth)
-	sw := float64(gl.ScreenWidth)
-	cx := gl.CameraX()
+	ww := float64(defs.WorldWidth)
+	sw := float64(defs.ScreenWidth)
+	cx := defs.CameraX()
 	over := sw - (ww - cx)
 
 	if over > 0 && x < over {
@@ -25,7 +25,7 @@ func ScreenX(x float64) float64 {
 
 func OffScreen(x, y float64) bool {
 
-	return (x < -100 || x > gl.ScreenWidth+100 || y < 0 || y > gl.ScreenHeight)
+	return (x < -100 || x > defs.ScreenWidth+100 || y < 0 || y > defs.ScreenHeight)
 }
 
 func RandChoiceF(lst []float64) float64 {
@@ -41,7 +41,7 @@ func RandChoiceS(lst []string) string {
 }
 
 func ComputeBullet(firepos, playpos *cmp.Pos, time float64) (float64, float64) {
-	tt := gl.MaxTPS * time
+	tt := defs.MaxTPS * time
 	projected_x := playpos.X + (playpos.DX * tt)
 	projected_y := playpos.Y
 	dx := (projected_x - firepos.X) / tt

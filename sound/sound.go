@@ -4,7 +4,7 @@ import (
 	"bytes"
 	_ "embed"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/wav"
@@ -147,7 +147,7 @@ func addSample(name SoundType, data []byte, loop bool) {
 }
 
 func Play(name SoundType) {
-	if gl.Mute {
+	if defs.Mute {
 		return
 	}
 
@@ -156,7 +156,7 @@ func Play(name SoundType) {
 }
 
 func PlayIfNot(name SoundType) {
-	if gl.Mute {
+	if defs.Mute {
 		return
 	}
 

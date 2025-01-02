@@ -2,8 +2,8 @@ package human
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -39,7 +39,7 @@ func (s *HumanRescued) Update(ai *cmp.AI, e types.IEntity) {
 	pc.X = pec.X
 
 	// TODO why not aligned ?
-	if pc.Y > gl.ScreenHeight-e.GetEngine().MountainHeight(pc.X) {
+	if pc.Y > defs.ScreenHeight-e.GetEngine().MountainHeight(pc.X) {
 		ai.NextState = types.HumanWalking
 		ev := event.NewHumanSaved(e)
 		event.NotifyEvent(ev)

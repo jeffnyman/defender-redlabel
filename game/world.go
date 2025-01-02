@@ -4,14 +4,14 @@ import (
 	"image/color"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/physics"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-var scrh = float64(gl.ScreenHeight)
-var scrtop = float64(gl.ScreenTop)
+var scrh = float64(defs.ScreenHeight)
+var scrtop = float64(defs.ScreenTop)
 
 type World struct {
 	points  []float64
@@ -29,16 +29,16 @@ func NewWorld(engine *Engine) *World {
 		active: true,
 	}
 
-	w.points = make([]float64, gl.WorldWidth+1)
+	w.points = make([]float64, defs.WorldWidth+1)
 	var y float64 = 50
 	var dy float64 = 1
 
-	for i := 0; i <= gl.WorldWidth; i++ {
+	for i := 0; i <= defs.WorldWidth; i++ {
 		w.points[i] = y
 		y += dy
 
 		if i > 50 {
-			if y < 50 || y > gl.ScreenHeight/4 || rand.Intn(10) == 1 {
+			if y < 50 || y > defs.ScreenHeight/4 || rand.Intn(10) == 1 {
 				dy = -dy
 			}
 		} else {
@@ -49,7 +49,7 @@ func NewWorld(engine *Engine) *World {
 	y = 50
 	dy = 1
 
-	for i := gl.WorldWidth; i > 0; i-- {
+	for i := defs.WorldWidth; i > 0; i-- {
 		if y >= w.points[i] {
 			break
 		}
@@ -80,8 +80,8 @@ func (w *World) At(wx float64) float64 {
 		wx = 0
 	}
 
-	if wx > gl.WorldWidth {
-		wx = gl.WorldWidth
+	if wx > defs.WorldWidth {
+		wx = defs.WorldWidth
 	}
 
 	return w.points[int(wx)]
@@ -95,14 +95,14 @@ func (w *World) Update() {
 	if w.explode {
 		w.counter++
 
-		if w.counter > gl.WorldExplodeTicks {
+		if w.counter > defs.WorldExplodeTicks {
 			return
 		}
 
-		ww := gl.WorldWidth
-		i := int(gl.CameraX())
+		ww := defs.WorldWidth
+		i := int(defs.CameraX())
 
-		for x := -2000; x < gl.ScreenWidth+2000; x++ {
+		for x := -2000; x < defs.ScreenWidth+2000; x++ {
 			if i < 0 {
 				i += ww
 			} else if i > ww {
@@ -124,14 +124,14 @@ func (w *World) Draw(scr *ebiten.Image) {
 		return
 	}
 
-	if w.counter > gl.WorldExplodeTicks {
+	if w.counter > defs.WorldExplodeTicks {
 		return
 	}
 
-	ww := gl.WorldWidth
-	i := int(gl.CameraX())
+	ww := defs.WorldWidth
+	i := int(defs.CameraX())
 
-	for x := 0; x < gl.ScreenWidth; x++ {
+	for x := 0; x < defs.ScreenWidth; x++ {
 		if i < 0 {
 			i += ww
 		} else if i > ww {
@@ -143,18 +143,18 @@ func (w *World) Draw(scr *ebiten.Image) {
 		xOffset := 0
 
 		if w.explode {
-			s := 4 * float64(w.counter) / float64(gl.WorldExplodeTicks)
+			s := 4 * float64(w.counter) / float64(defs.WorldExplodeTicks)
 			w.ops.GeoM.Scale(1+s, 1+s)
 			xOffset = rand.Intn(30) - 15
 		}
 
-		w.ops.GeoM.Translate(float64(x+xOffset), float64(gl.ScreenHeight-h))
+		w.ops.GeoM.Translate(float64(x+xOffset), float64(defs.ScreenHeight-h))
 		scr.DrawImage(w.img, w.ops)
 		i++
 	}
 
-	sw := float64(gl.ScreenWidth)
-	cx := gl.CameraX() - float64(ww/2) + sw/2
+	sw := float64(defs.ScreenWidth)
+	cx := defs.CameraX() - float64(ww/2) + sw/2
 
 	rs := sw / 4
 	rw := sw / 2

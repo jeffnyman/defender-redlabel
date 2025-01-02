@@ -4,7 +4,7 @@ import (
 	"image"
 	"strings"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/graphics"
 	"github.com/jeffnyman/defender-redlabel/types"
 
@@ -103,15 +103,15 @@ func (w *Characters) getOffset(c string) int {
 func (w *Characters) Update() {
 	w.colCtr += w.speed
 
-	if w.colCtr == gl.MaxTPS {
+	if w.colCtr == defs.MaxTPS {
 		w.colCtr = 0
 		w.colIdx++
 	}
 
-	currCol := gl.Cols[w.colIdx%5]
-	nextCol := gl.Cols[(w.colIdx+1)%5]
+	currCol := defs.Cols[w.colIdx%5]
+	nextCol := defs.Cols[(w.colIdx+1)%5]
 	dcol := nextCol.Subtract(currCol)
-	dcol = dcol.Multiply(1.0 / float64(gl.MaxTPS))
+	dcol = dcol.Multiply(1.0 / float64(defs.MaxTPS))
 	ncol := dcol.Multiply(w.colCtr)
 	ncol = ncol.Add(currCol)
 	w.col = ncol

@@ -2,7 +2,7 @@ package human
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -22,10 +22,10 @@ func (s *HumanWalking) GetName() types.StateType {
 
 func (s *HumanWalking) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
-	pc.DX = gl.HumanSpeed
+	pc.DX = defs.HumanSpeed
 	pc.DY = 0
 	ai.Counter = 0
-	pc.Y = gl.ScreenHeight - e.GetEngine().MountainHeight(pc.X)
+	pc.Y = defs.ScreenHeight - e.GetEngine().MountainHeight(pc.X)
 }
 
 func (s *HumanWalking) Update(ai *cmp.AI, e types.IEntity) {
@@ -33,5 +33,5 @@ func (s *HumanWalking) Update(ai *cmp.AI, e types.IEntity) {
 
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 
-	pc.Y = gl.ScreenHeight - e.GetEngine().MountainHeight(pc.X)
+	pc.Y = defs.ScreenHeight - e.GetEngine().MountainHeight(pc.X)
 }

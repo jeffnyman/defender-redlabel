@@ -2,7 +2,7 @@ package systems
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
 
@@ -56,17 +56,17 @@ func (pos *PosSystem) process(e types.IEntity) {
 	}
 
 	if poscmp.X < 0 {
-		poscmp.X += gl.WorldWidth
-	} else if poscmp.X > gl.WorldWidth {
-		poscmp.X -= gl.WorldWidth
+		poscmp.X += defs.WorldWidth
+	} else if poscmp.X > defs.WorldWidth {
+		poscmp.X -= defs.WorldWidth
 	}
 
-	if poscmp.Y < gl.ScreenTop+20 {
-		poscmp.Y = gl.ScreenTop + 20
+	if poscmp.Y < defs.ScreenTop+20 {
+		poscmp.Y = defs.ScreenTop + 20
 	}
 
-	if poscmp.Y > gl.ScreenHeight-50 {
-		poscmp.Y = gl.ScreenHeight - 50
+	if poscmp.Y > defs.ScreenHeight-50 {
+		poscmp.Y = defs.ScreenHeight - 50
 	}
 
 	poscmp.X += poscmp.DX

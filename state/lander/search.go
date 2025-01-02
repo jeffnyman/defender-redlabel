@@ -5,8 +5,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -43,7 +43,7 @@ func (s *LanderSearch) Update(ai *cmp.AI, e types.IEntity) {
 		ai.Counter = 0
 		mh := e.GetEngine().MountainHeight(pc.X)
 
-		if pc.Y+200 < gl.ScreenHeight-mh {
+		if pc.Y+200 < defs.ScreenHeight-mh {
 			ai.Scratch++
 		} else {
 			ai.Scratch--
@@ -60,17 +60,17 @@ func (s *LanderSearch) Update(ai *cmp.AI, e types.IEntity) {
 
 	switch ai.Scratch {
 	case 0:
-		pc.DY = -gl.LanderSpeed
+		pc.DY = -defs.LanderSpeed
 	case 1, 2, 3, 4:
 		pc.DY = 0
 	case 5:
-		pc.DY = gl.LanderSpeed
+		pc.DY = defs.LanderSpeed
 	}
 
-	// TODO gl bullet rate
+	// TODO defs bullet rate
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
 		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
-		bullettime := gl.CurrentLevel().BulletTime
+		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
 		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)

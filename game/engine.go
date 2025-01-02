@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -229,7 +229,7 @@ func (eng *Engine) Update() int {
 func (eng *Engine) Draw(screen *ebiten.Image) {
 	if eng.flash > 0 {
 		if eng.flash%2 == 0 {
-			col := gl.Cols[(eng.flash/2)%5].Convert()
+			col := defs.Cols[(eng.flash/2)%5].Convert()
 			screen.Fill(col)
 		}
 		eng.flash--
@@ -287,7 +287,7 @@ func (eng *Engine) TriggerLaser(x, y, dx float64) {
 			lc := v.GetComponent(types.Life).(*cmp.Life)
 			lc.TicksToLive = 90
 			dc := v.GetComponent(types.LaserDraw).(*cmp.LaserDraw)
-			dc.Color = gl.LaserCols[eng.laserColIdx%15]
+			dc.Color = defs.LaserCols[eng.laserColIdx%15]
 			mv := v.GetComponent(types.LaserMove).(*cmp.LaserMove)
 			mv.Length = 0
 			eng.laserColIdx++
@@ -298,7 +298,7 @@ func (eng *Engine) TriggerLaser(x, y, dx float64) {
 }
 
 func (eng *Engine) GetPlayer() types.IEntity {
-	return eng.entities[gl.PlayerID]
+	return eng.entities[defs.PlayerID]
 }
 
 func (eng *Engine) MountainHeight(wx float64) float64 {
@@ -385,7 +385,7 @@ func (eng *Engine) Terminate() {
 
 func (eng *Engine) SetPauseAll(p bool, this types.EntityID) {
 	for _, v := range eng.entities {
-		if v.Active() && v.GetID() != gl.PlayerID && v.GetID() != this {
+		if v.Active() && v.GetID() != defs.PlayerID && v.GetID() != this {
 			v.SetPaused(p)
 		}
 	}
@@ -425,14 +425,14 @@ func (eng *Engine) LevelEnd() {
 	eng.stars.SetActive(false)
 	// TODO attack wave N completed bonus * (100*N)
 
-	s := fmt.Sprintf("ATTACK WAVE %d COMPLETED   BONUS X %d", gl.LevelNo()+1, (gl.LevelNo()+1)*100)
-	eng.levelEndChars = eng.chars.Add(s, gl.ScreenWidth/2-500, gl.ScreenHeight/2)
+	s := fmt.Sprintf("ATTACK WAVE %d COMPLETED   BONUS X %d", defs.LevelNo()+1, (defs.LevelNo()+1)*100)
+	eng.levelEndChars = eng.chars.Add(s, defs.ScreenWidth/2-500, defs.ScreenHeight/2)
 }
 
 func (eng *Engine) LevelStart() {
 	eng.InitEnemies()
 
-	if gl.ResetHumans() {
+	if defs.ResetHumans() {
 		eng.InitHumans()
 	}
 
@@ -452,7 +452,7 @@ func (eng *Engine) UpdateHUD() {
 		pl := eng.lives[i]
 		dc := pl.GetComponent(types.Draw).(*cmp.Draw)
 
-		if i >= gl.PlayerLives-1 {
+		if i >= defs.PlayerLives-1 {
 			dc.Hide = true
 		} else {
 			dc.Hide = false
@@ -461,7 +461,7 @@ func (eng *Engine) UpdateHUD() {
 		sb := eng.bombs[i]
 		dc = sb.GetComponent(types.Draw).(*cmp.Draw)
 
-		if i >= gl.SmartBombs {
+		if i >= defs.SmartBombs {
 			dc.Hide = true
 		} else {
 			dc.Hide = false
@@ -478,5 +478,5 @@ func (eng *Engine) GameOver() {
 	}
 
 	eng.chars.Clear()
-	eng.chars.Add("GAME OVER", gl.ScreenWidth/2-100, gl.ScreenHeight/2)
+	eng.chars.Add("GAME OVER", defs.ScreenWidth/2-100, defs.ScreenHeight/2)
 }

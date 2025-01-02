@@ -4,20 +4,20 @@ import (
 	"image/color"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-var sw = float64(gl.ScreenWidth)
-var sh = float64(gl.ScreenHeight)
-var st = float64(gl.ScreenTop)
+var sw = float64(defs.ScreenWidth)
+var sh = float64(defs.ScreenHeight)
+var st = float64(defs.ScreenTop)
 var rxs = sw * 0.25
 var rxe = sw * 0.75
 var rw = rxe - rxs
-var ww = float64(gl.WorldWidth)
+var ww = float64(defs.WorldWidth)
 var rsw = rw * (sw / ww)
 var lineImg = ebiten.NewImage(1, 1)
 var lineOpts = &ebiten.DrawImageOptions{}
@@ -52,7 +52,7 @@ func (drawsys *RadarDrawSystem) GetName() types.SystemName {
 func (drawsys *RadarDrawSystem) Update() {}
 
 func (drawsys *RadarDrawSystem) HUD(screen *ebiten.Image) {
-	col := gl.LevelCol()
+	col := defs.LevelCol()
 	lineOpts.ColorM.Scale(col.R, col.G, col.B, col.A)
 	lineOpts.GeoM.Reset()
 	lineOpts.GeoM.Scale(sw, 2)
@@ -103,7 +103,7 @@ func (drawsys *RadarDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
 	op := rdc.Opts
 	op.GeoM.Reset()
 
-	var posx = ww/2 + pc.X - gl.CameraX() - sw/2
+	var posx = ww/2 + pc.X - defs.CameraX() - sw/2
 
 	if posx > ww {
 		posx = posx - ww
@@ -117,7 +117,7 @@ func (drawsys *RadarDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
 
 	if rdc.Cycle {
 		rdc.CycleIndex += 0.4
-		rdc.Color = gl.Cols[int(rdc.CycleIndex)%5]
+		rdc.Color = defs.Cols[int(rdc.CycleIndex)%5]
 		op.ColorM.Reset()
 	}
 

@@ -1,7 +1,7 @@
 package cmp
 
 import (
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -19,7 +19,7 @@ type Ship struct {
 
 func NewShip(w, h int) *Ship {
 	return &Ship{
-		ScreenOffset:  gl.ScreenWidth * 0.2,
+		ScreenOffset:  defs.ScreenWidth * 0.2,
 		Direction:     1,
 		componentType: types.Ship,
 		W:             float64(w),

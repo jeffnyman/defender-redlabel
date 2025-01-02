@@ -4,8 +4,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -26,7 +26,7 @@ func (s *LanderGrab) GetName() types.StateType {
 
 func (s *LanderGrab) Enter(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
-	pc.DY = -gl.LanderSpeed
+	pc.DY = -defs.LanderSpeed
 	ai.Counter = 0
 }
 
@@ -39,16 +39,16 @@ func (s *LanderGrab) Update(ai *cmp.AI, e types.IEntity) {
 		ai.NextState = types.LanderSearch
 	}
 
-	// TODO gl bullet rate
+	// TODO defs bullet rate
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
 		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
-		bullettime := gl.CurrentLevel().BulletTime
+		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
 		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)
 	}
 
-	if pc.Y < gl.ScreenTop+50 {
+	if pc.Y < defs.ScreenTop+50 {
 		ai.NextState = types.LanderMutate
 		he := e.GetEngine().GetEntity(e.Child())
 		hai := he.GetComponent(types.AI).(*cmp.AI)

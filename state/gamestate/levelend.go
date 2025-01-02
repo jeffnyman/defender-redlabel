@@ -2,7 +2,7 @@ package gamestate
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -29,7 +29,7 @@ func (s *GameLevelEnd) Update(ai *cmp.AI, e types.IEntity) {
 	ai.Scratch++
 
 	if ai.Scratch > 4*30 {
-		gl.NextLevel()
+		defs.NextLevel()
 		ai.NextState = types.GameStart
 	}
 }

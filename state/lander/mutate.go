@@ -4,8 +4,8 @@ import (
 	"math/rand"
 
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/graphics"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -38,7 +38,7 @@ func (s *LanderMutate) Enter(ai *cmp.AI, e types.IEntity) {
 }
 
 func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
-	gs := float64(gl.LanderSpeed)
+	gs := float64(defs.LanderSpeed)
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	ppc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
 
@@ -72,10 +72,10 @@ func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
 		event.NotifyEvent(ev)
 	}
 
-	// TODO gl bullet rate
+	// TODO defs bullet rate
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
 		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
-		bullettime := gl.CurrentLevel().BulletTime
+		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
 		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)

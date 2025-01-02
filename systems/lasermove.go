@@ -5,7 +5,7 @@ import (
 
 	"math"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -52,7 +52,7 @@ func (lms *LaserMoveSystem) Update() {
 }
 
 func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
-	pe := laserEnt.GetEngine().GetEntity(gl.PlayerID)
+	pe := laserEnt.GetEngine().GetEntity(defs.PlayerID)
 	ppc := pe.GetComponent(types.Pos).(*cmp.Pos)
 	psc := pe.GetComponent(types.Ship).(*cmp.Ship)
 	lpc := laserEnt.GetComponent(types.Pos).(*cmp.Pos)

@@ -5,7 +5,7 @@ import (
 
 	"image"
 
-	"github.com/jeffnyman/defender-redlabel/gl"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/physics"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -137,7 +137,7 @@ func (ds *DrawSystem) DrawDisperse(x, y float64, sx, sy, fw, fh int, dc *cmp.Dra
 func (ds *DrawSystem) Cycle(drawcmp *cmp.Draw, v float64) {
 	if drawcmp.Cycle {
 		drawcmp.CycleIndex += v
-		c := gl.Cols[int(drawcmp.CycleIndex)%5]
+		c := defs.Cols[int(drawcmp.CycleIndex)%5]
 		drawcmp.Opts.ColorM.Reset()
 		drawcmp.Opts.ColorM.Scale(c.R, c.G, c.B, c.A)
 	}

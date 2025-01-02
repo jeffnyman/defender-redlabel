@@ -2,8 +2,8 @@ package human
 
 import (
 	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
-	"github.com/jeffnyman/defender-redlabel/gl"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -37,7 +37,7 @@ func (s *HumanDropping) Update(ai *cmp.AI, e types.IEntity) {
 	pc := e.GetComponent(types.Pos).(*cmp.Pos)
 	pc.DY += 0.1
 
-	if pc.Y > gl.ScreenHeight-e.GetEngine().MountainHeight(pc.X) {
+	if pc.Y > defs.ScreenHeight-e.GetEngine().MountainHeight(pc.X) {
 		if pc.DY > 10 {
 			ai.NextState = types.HumanDie
 		} else {
