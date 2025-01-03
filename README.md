@@ -12,7 +12,7 @@
 
 </p>
 
-This repository will be a Go-based implementation of the extracted, reassembled and rebuilt ROM from my [Retro Defender](https://github.com/jeffnyman/retro-defender) project.
+This repository will be a Go-based implementation of the extracted, reassembled and rebuilt ROM from my [Retro Defender](https://github.com/jeffnyman/defender-retro) project.
 
 This is a Go project, so all you should have to do once you have [Go installed on your system](https://go.dev/dl/) is:
 
