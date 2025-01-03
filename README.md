@@ -34,4 +34,4 @@ FIRE LASER  = F
 SMART BOMB  = B
 ```
 
-The key bindings are currently set up in the `gl/gl.go` file if you want to change them.
+The key bindings are currently set up in the `defs/defs.go` file if you want to change them.
