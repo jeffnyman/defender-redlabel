@@ -3,7 +3,7 @@ package bomber
 import (
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -22,14 +22,14 @@ func (s *BomberMove) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *BomberMove) Enter(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (s *BomberMove) Enter(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	pc.DX = defs.BomberSpeed
 	pc.DY = -defs.BomberSpeed
 }
 
-func (s *BomberMove) Update(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (s *BomberMove) Update(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 
 	if pc.Y < defs.ScreenTop+50 || pc.Y > defs.ScreenHeight-100 {
 		pc.DY = -pc.DY

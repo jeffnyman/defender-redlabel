@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/event"
 
 	"fmt"
@@ -94,7 +94,7 @@ func (e *Engine) addGame() {
 	sgraph.AddState(gamestate.NewGameOver())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.GameIntro)
+	ai := components.NewAI(fsm, types.GameIntro)
 	gme.AddComponent(ai)
 
 }
@@ -113,28 +113,28 @@ func (e *Engine) addPlayer() {
 	sgraph.AddState(player.NewPlayerDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.PlayerPlay)
+	ai := components.NewAI(fsm, types.PlayerPlay)
 	plEnt.AddComponent(ai)
 	smap := graphics.GetSpriteMap("ship.png")
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	plEnt.AddComponent(dr)
 	col := types.ColorF{R: 1, G: 1, B: 1, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	plEnt.AddComponent(rd)
-	sc := cmp.NewShip(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	sc := components.NewShip(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	plEnt.AddComponent(sc)
-	pc := cmp.NewPos(x, y, 0, 0)
+	pc := components.NewPos(x, y, 0, 0)
 	plEnt.AddComponent(pc)
 
 	fEnt := NewEntity(e, types.Player)
 	fEnt.SetActive(true)
 	fsmap := graphics.GetSpriteMap("thrust.png")
-	fdr := cmp.NewDraw(ssheet, fsmap, types.ColorF{R: 1, G: 1, B: 1})
+	fdr := components.NewDraw(ssheet, fsmap, types.ColorF{R: 1, G: 1, B: 1})
 
 	fdr.Scale = 0.7
 	fEnt.AddComponent(fdr)
 	plEnt.SetChild(fEnt.Id)
-	fpc := cmp.NewPos(0, 0, 0, 0)
+	fpc := components.NewPos(0, 0, 0, 0)
 	fEnt.AddComponent(fpc)
 }
 
@@ -149,7 +149,7 @@ func (e *Engine) addLander(count int) {
 		x = defs.WorldWidth * 0.8
 	}
 
-	pc := cmp.NewPos(x, defs.ScreenTop+500*rand.Float64(), 0, 0)
+	pc := components.NewPos(x, defs.ScreenTop+500*rand.Float64(), 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(lander.NewLanderWait())
@@ -161,14 +161,14 @@ func (e *Engine) addLander(count int) {
 	sgraph.AddState(lander.NewLanderDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.LanderWait)
+	ai := components.NewAI(fsm, types.LanderWait)
 	ai.Wait = 60 + (count%3)*200
 	ent.AddComponent(ai)
 	smap := graphics.GetSpriteMap("lander.png")
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 0, G: 1, B: 0, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
 
 }
@@ -178,7 +178,7 @@ func (e *Engine) addBaiter(count int) {
 	ent := NewEntity(e, types.Baiter)
 	ent.SetActive(true)
 
-	pc := cmp.NewPos(0, 0, 0, 0)
+	pc := components.NewPos(0, 0, 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(baiter.NewBaiterWait())
@@ -187,17 +187,17 @@ func (e *Engine) addBaiter(count int) {
 	sgraph.AddState(baiter.NewBaiterDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.BaiterWait)
+	ai := components.NewAI(fsm, types.BaiterWait)
 	ent.AddComponent(ai)
 	smap := graphics.GetSpriteMap("baiter.png")
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 0, G: 0.5, B: 0, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
-	sh := cmp.NewShootable()
+	sh := components.NewShootable()
 	ent.AddComponent(sh)
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	ent.AddComponent(cl)
 }
 
@@ -212,7 +212,7 @@ func (e *Engine) addHuman(count int) {
 		x = rand.Float64()*defs.ScreenWidth + defs.CameraX()
 	}
 
-	pc := cmp.NewPos(x, 0, 0, 0)
+	pc := components.NewPos(x, 0, 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(human.NewHumanWalking())
@@ -222,17 +222,17 @@ func (e *Engine) addHuman(count int) {
 	sgraph.AddState(human.NewHumanDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.HumanWalking)
+	ai := components.NewAI(fsm, types.HumanWalking)
 	ent.AddComponent(ai)
 	smap := graphics.GetSpriteMap("human.png")
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 1, G: 0, B: 1, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
-	sh := cmp.NewShootable()
+	sh := components.NewShootable()
 	ent.AddComponent(sh)
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	ent.AddComponent(cl)
 
 }
@@ -244,14 +244,14 @@ func (e *Engine) addBomber(count int) {
 	x := (rand.Float64() * defs.ScreenWidth) + defs.WorldWidth/3
 	y := (rand.Float64() * defs.ScreenHeight / 2) + defs.ScreenTop + 50
 
-	pc := cmp.NewPos(x, y, 0, 0)
+	pc := components.NewPos(x, y, 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(bomber.NewBomberMove())
 	sgraph.AddState(bomber.NewBomberDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.BomberMove)
+	ai := components.NewAI(fsm, types.BomberMove)
 	ent.AddComponent(ai)
 
 	smap := graphics.GFXFrame{
@@ -260,17 +260,17 @@ func (e *Engine) addBomber(count int) {
 		Ticks_per_frame: 30,
 	}
 
-	dr := cmp.NewDraw(blankImg, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(blankImg, smap, types.ColorF{R: 1, G: 1, B: 1})
 	dr.Cycle = true
 	dr.Bomber = true
 	dr.Scale = 1
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 0.5, G: 0, B: 1, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	ent.AddComponent(cl)
-	sh := cmp.NewShootable()
+	sh := components.NewShootable()
 	ent.AddComponent(sh)
 }
 
@@ -281,26 +281,26 @@ func (e *Engine) addPod(count int) {
 	x := (rand.Float64() * defs.ScreenWidth) + defs.WorldWidth/2
 	y := (rand.Float64() * defs.ScreenHeight / 2) + defs.ScreenTop + 50
 
-	pc := cmp.NewPos(x, y, 0, 0)
+	pc := components.NewPos(x, y, 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(pod.NewPodMove())
 	sgraph.AddState(pod.NewPodDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.PodMove)
+	ai := components.NewAI(fsm, types.PodMove)
 	ent.AddComponent(ai)
 	smap := graphics.GetSpriteMap("pod.png")
 	ssheet := graphics.GetSpriteSheet()
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	dr.Scale = 1
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 0.5, G: 0, B: 0.5, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	ent.AddComponent(cl)
-	sh := cmp.NewShootable()
+	sh := components.NewShootable()
 	ent.AddComponent(sh)
 }
 
@@ -308,36 +308,36 @@ func (e *Engine) AddSwarmer(count int, x, y float64) {
 	ent := NewEntity(e, types.Swarmer)
 	ent.SetActive(true)
 
-	pc := cmp.NewPos(x, y, 0, 0)
+	pc := components.NewPos(x, y, 0, 0)
 	ent.AddComponent(pc)
 	sgraph := systems.NewStateGraph()
 	sgraph.AddState(swarmer.NewSwarmerMove())
 	sgraph.AddState(swarmer.NewSwarmerDie())
 
 	fsm := systems.NewFSM(sgraph)
-	ai := cmp.NewAI(fsm, types.SwarmerMove)
+	ai := components.NewAI(fsm, types.SwarmerMove)
 	ent.AddComponent(ai)
 	smap := graphics.GetSpriteMap("swarmer.png")
 	ssheet := graphics.GetSpriteSheet()
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	dr.Scale = 1
 	ent.AddComponent(dr)
 	col := types.ColorF{R: 0.7, G: 0, B: 0, A: 1}
-	rd := cmp.NewRadarDraw(blankImg, col)
+	rd := components.NewRadarDraw(blankImg, col)
 	ent.AddComponent(rd)
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	ent.AddComponent(cl)
-	sh := cmp.NewShootable()
+	sh := components.NewShootable()
 	ent.AddComponent(sh)
 }
 
 func (e *Engine) AddScoreSprite(ev event.IEvent) {
 	eve := ev.GetPayload().(*Entity)
-	evpc := eve.GetComponent(types.Pos).(*cmp.Pos)
+	evpc := eve.GetComponent(types.Pos).(*components.Pos)
 
 	ent := NewEntity(e, types.Score)
 	ent.SetActive(true)
-	pc := cmp.NewPos(evpc.X-defs.CameraX(), evpc.Y, 0, 0)
+	pc := components.NewPos(evpc.X-defs.CameraX(), evpc.Y, 0, 0)
 	pc.ScreenCoords = true
 	ent.AddComponent(pc)
 	s := "500.png"
@@ -348,10 +348,10 @@ func (e *Engine) AddScoreSprite(ev event.IEvent) {
 
 	smap := graphics.GetSpriteMap(s)
 	ssheet := graphics.GetSpriteSheet()
-	dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+	dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 	dr.Scale = 1
 	ent.AddComponent(dr)
-	li := cmp.NewLife(60)
+	li := components.NewLife(60)
 	ent.AddComponent(li)
 }
 
@@ -360,14 +360,14 @@ func (e *Engine) initBulletPool() {
 
 	for i := 0; i < 40; i++ {
 		ent := NewEntity(e, types.Bullet)
-		pc := cmp.NewPos(0, 0, 0, 0)
+		pc := components.NewPos(0, 0, 0, 0)
 		ent.AddComponent(pc)
 		smap := graphics.GetSpriteMap("bullet.png")
-		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+		dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		ent.AddComponent(dr)
-		li := cmp.NewLife(240)
+		li := components.NewLife(240)
 		ent.AddComponent(li)
-		cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+		cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 		ent.AddComponent(cl)
 		e.bulletPool = append(e.bulletPool, ent)
 	}
@@ -378,15 +378,15 @@ func (e *Engine) initBombPool() {
 
 	for i := 0; i < 20; i++ {
 		ent := NewEntity(e, types.Bomb)
-		pc := cmp.NewPos(0, 0, 0, 0)
+		pc := components.NewPos(0, 0, 0, 0)
 		ent.AddComponent(pc)
 		smap := graphics.GetSpriteMap("bomb.png")
-		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+		dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		dr.Cycle = true
 		ent.AddComponent(dr)
-		cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+		cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 		ent.AddComponent(cl)
-		li := cmp.NewLife(240)
+		li := components.NewLife(240)
 		ent.AddComponent(li)
 		e.bombPool = append(e.bombPool, ent)
 	}
@@ -395,13 +395,13 @@ func (e *Engine) initBombPool() {
 func (e *Engine) initLaserPool() {
 	for i := 0; i < 15; i++ {
 		ent := NewEntity(e, types.Laser)
-		pc := cmp.NewPos(0, 0, 0, 0)
+		pc := components.NewPos(0, 0, 0, 0)
 		ent.AddComponent(pc)
-		dr := cmp.NewLaserDraw()
+		dr := components.NewLaserDraw()
 		ent.AddComponent(dr)
-		li := cmp.NewLife(240)
+		li := components.NewLife(240)
 		ent.AddComponent(li)
-		mv := cmp.NewLaserMove()
+		mv := components.NewLaserMove()
 		ent.AddComponent(mv)
 
 		e.laserPool = append(e.laserPool, ent)
@@ -414,11 +414,11 @@ func (e *Engine) initHUD() {
 	for i := 0; i < 5; i++ {
 		ent := NewEntity(e, types.PlayerLife)
 		ent.SetActive(true)
-		pc := cmp.NewPos(float64(i*50), 40, 0, 0)
+		pc := components.NewPos(float64(i*50), 40, 0, 0)
 		pc.ScreenCoords = true
 		ent.AddComponent(pc)
 		smap := graphics.GetSpriteMap("shiplife.png")
-		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+		dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		dr.Scale = 0.8
 		if i >= defs.PlayerLives {
 			dr.Hide = true
@@ -430,11 +430,11 @@ func (e *Engine) initHUD() {
 	for i := 0; i < 5; i++ {
 		ent := NewEntity(e, types.HUDBomb)
 		ent.SetActive(true)
-		pc := cmp.NewPos(350, 40+float64(i*20), 0, 0)
+		pc := components.NewPos(350, 40+float64(i*20), 0, 0)
 		pc.ScreenCoords = true
 		ent.AddComponent(pc)
 		smap := graphics.GetSpriteMap("smartbomb.png")
-		dr := cmp.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
+		dr := components.NewDraw(ssheet, smap, types.ColorF{R: 1, G: 1, B: 1})
 		dr.Scale = 0.8
 		if i >= defs.SmartBombs {
 			dr.Hide = true
@@ -459,7 +459,7 @@ func (e *Engine) initEvents() {
 		// logger.Info("Collide : %s ", en.GetClass().String())
 
 		if en.GetClass() == types.Human {
-			ai := en.GetComponent(types.AI).(*cmp.AI)
+			ai := en.GetComponent(types.AI).(*components.AI)
 
 			if ai.State == types.HumanDropping {
 				ai.NextState = types.HumanRescued
@@ -473,13 +473,13 @@ func (e *Engine) initEvents() {
 	}
 
 	explodeTrigger := func(ev event.IEvent) {
-		if ct := ev.GetPayload().(*cmp.Pos); ct != nil {
+		if ct := ev.GetPayload().(*components.Pos); ct != nil {
 			e.TriggerPS(ct.X, ct.Y)
 		}
 	}
 
 	bulletTrigger := func(ev event.IEvent) {
-		if ct := ev.GetPayload().(*cmp.Pos); ct != nil {
+		if ct := ev.GetPayload().(*components.Pos); ct != nil {
 			if math.Abs(ct.DX) < 20 {
 				e.TriggerBullet(ct.X, ct.Y, ct.DX, ct.DY)
 				sound.Play(sound.Bullet)
@@ -524,7 +524,7 @@ func (e *Engine) initEvents() {
 
 	playerDie := func(ev event.IEvent) {
 		pe := e.GetEntities()[defs.PlayerID]
-		pai := pe.GetComponent(types.AI).(*cmp.AI)
+		pai := pe.GetComponent(types.AI).(*components.AI)
 		pai.NextState = types.PlayerDie
 	}
 
@@ -534,8 +534,8 @@ func (e *Engine) initEvents() {
 
 	playerFire := func(ev event.IEvent) {
 		pe := ev.GetPayload().(*Entity)
-		pc := pe.GetComponent(types.Pos).(*cmp.Pos)
-		sc := pe.GetComponent(types.Ship).(*cmp.Ship)
+		pc := pe.GetComponent(types.Pos).(*components.Pos)
+		sc := pe.GetComponent(types.Ship).(*components.Ship)
 		x := pc.X + 25
 		y := pc.Y + 25
 
@@ -557,7 +557,7 @@ func (e *Engine) initEvents() {
 		defs.Score += 1000
 		e.ChangeString(defs.ScoreCharId, fmt.Sprintf("%8d", defs.Score))
 		ent := ev.GetPayload().(*Entity)
-		pc := ent.GetComponent(types.Pos).(*cmp.Pos)
+		pc := ent.GetComponent(types.Pos).(*components.Pos)
 
 		for i := 0; i < defs.CurrentLevel().SwarmerCount; i++ {
 			e.AddSwarmer(i, pc.X, pc.Y)

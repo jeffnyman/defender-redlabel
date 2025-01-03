@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"math"
 
@@ -53,10 +53,10 @@ func (lms *LaserMoveSystem) Update() {
 
 func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 	pe := laserEnt.GetEngine().GetEntity(defs.PlayerID)
-	ppc := pe.GetComponent(types.Pos).(*cmp.Pos)
-	psc := pe.GetComponent(types.Ship).(*cmp.Ship)
-	lpc := laserEnt.GetComponent(types.Pos).(*cmp.Pos)
-	lmc := laserEnt.GetComponent(types.LaserMove).(*cmp.LaserMove)
+	ppc := pe.GetComponent(types.Pos).(*components.Pos)
+	psc := pe.GetComponent(types.Ship).(*components.Ship)
+	lpc := laserEnt.GetComponent(types.Pos).(*components.Pos)
+	lmc := laserEnt.GetComponent(types.LaserMove).(*components.LaserMove)
 	lpc.X += lpc.DX * (20 + math.Abs(ppc.DX))
 	lmc.Length += 70
 
@@ -70,7 +70,7 @@ func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 	}
 
 	for _, v := range laserEnt.GetEngine().GetEntitiesWithComponent(types.Shootable) {
-		tpc := v.GetComponent(types.Pos).(*cmp.Pos)
+		tpc := v.GetComponent(types.Pos).(*components.Pos)
 		x1 := physics.ScreenX(tpc.X)
 		y1 := tpc.Y
 
@@ -79,7 +79,7 @@ func (lms *LaserMoveSystem) process(laserEnt types.IEntity) {
 		}
 
 		if v.HasComponent(types.Collide) {
-			tcc := v.GetComponent(types.Collide).(*cmp.Collide)
+			tcc := v.GetComponent(types.Collide).(*components.Collide)
 			w1 := tcc.W
 			h1 := tcc.H
 

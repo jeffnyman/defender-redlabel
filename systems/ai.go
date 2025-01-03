@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
 
@@ -48,7 +48,7 @@ func (ai *AISystem) Update() {
 func (ai *AISystem) Draw(screen *ebiten.Image) {}
 
 func (ai *AISystem) process(e types.IEntity) {
-	aicmp := e.GetComponent(types.AI).(*cmp.AI)
+	aicmp := e.GetComponent(types.AI).(*components.AI)
 	GetFSM(aicmp.FSMId).Update(aicmp, e)
 
 }

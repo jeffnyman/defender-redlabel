@@ -3,7 +3,7 @@ package systems
 import (
 	"fmt"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
@@ -35,7 +35,7 @@ func GetFSM(id int) FSM {
 	return fsmList[id]
 }
 
-func (f FSM) Update(ai *cmp.AI, e types.IEntity) {
+func (f FSM) Update(ai *components.AI, e types.IEntity) {
 	if ai.NextState != ai.State {
 		next_state, err := f.stategraph.State(ai.NextState)
 

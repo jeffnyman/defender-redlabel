@@ -1,7 +1,7 @@
 package pod
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -19,8 +19,8 @@ func (s *PodMove) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *PodMove) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *PodMove) Enter(ai *components.AI, e types.IEntity) {
 }
 
-func (s *PodMove) Update(ai *cmp.AI, e types.IEntity) {
+func (s *PodMove) Update(ai *components.AI, e types.IEntity) {
 }

@@ -3,7 +3,7 @@ package lander
 import (
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/graphics"
@@ -25,22 +25,22 @@ func (s *LanderMutate) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *LanderMutate) Enter(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (s *LanderMutate) Enter(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	pc.DY = 0
 	pc.DX = 0
-	dc := e.GetComponent(types.Draw).(*cmp.Draw)
+	dc := e.GetComponent(types.Draw).(*components.Draw)
 	dc.SpriteMap = graphics.GetSpriteMap("mutant.png")
-	rc := e.GetComponent(types.RadarDraw).(*cmp.RadarDraw)
+	rc := e.GetComponent(types.RadarDraw).(*components.RadarDraw)
 	rc.Cycle = true
 	ai.Counter = 0
 	ai.Scratch = 0
 }
 
-func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
+func (s *LanderMutate) Update(ai *components.AI, e types.IEntity) {
 	gs := float64(defs.LanderSpeed)
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
-	ppc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
+	ppc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*components.Pos)
 
 	if pc.X > ppc.X {
 		pc.DX = -gs * 3
@@ -74,10 +74,10 @@ func (s *LanderMutate) Update(ai *cmp.AI, e types.IEntity) {
 
 	// TODO defs bullet rate
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
-		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
+		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*components.Pos)
 		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
-		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
+		ev := event.NewFireBullet(components.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)
 	}
 

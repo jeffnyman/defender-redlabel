@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -43,7 +43,7 @@ func (ds *AnimateSystem) Update() {
 
 	for _, e := range ds.targets {
 		if e.Active() {
-			dc := e.GetComponent(types.Draw).(*cmp.Draw)
+			dc := e.GetComponent(types.Draw).(*components.Draw)
 
 			if dc.Hide {
 				continue
@@ -54,7 +54,7 @@ func (ds *AnimateSystem) Update() {
 	}
 }
 
-func (ds *AnimateSystem) process(dc *cmp.Draw, e types.IEntity) {
+func (ds *AnimateSystem) process(dc *components.Draw, e types.IEntity) {
 	frames := dc.SpriteMap.Anim_frames
 
 	dc.Counter++

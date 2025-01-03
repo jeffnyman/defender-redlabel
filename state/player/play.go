@@ -1,7 +1,7 @@
 package player
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -23,17 +23,17 @@ func (s *PlayerPlay) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *PlayerPlay) Enter(ai *cmp.AI, e types.IEntity) {
-	sc := e.GetComponent(types.Ship).(*cmp.Ship)
+func (s *PlayerPlay) Enter(ai *components.AI, e types.IEntity) {
+	sc := e.GetComponent(types.Ship).(*components.Ship)
 	sc.ScreenOffset = defs.ScreenWidth * 0.1
 	ev := event.NewStart(e)
 	event.NotifyEvent(ev)
 }
 
-func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
-	sc := e.GetComponent(types.Ship).(*cmp.Ship)
-	dc := e.GetComponent(types.Draw).(*cmp.Draw)
+func (s *PlayerPlay) Update(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
+	sc := e.GetComponent(types.Ship).(*components.Ship)
+	dc := e.GetComponent(types.Draw).(*components.Draw)
 
 	if sc.Direction == 1 && sc.ScreenOffset > defs.ScreenWidth*0.1 {
 		sc.ScreenOffset -= 30
@@ -52,8 +52,8 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 	defs.SetCameraX(camx)
 
 	fle := e.GetEngine().GetEntity(e.Child())
-	flpc := fle.GetComponent(types.Pos).(*cmp.Pos)
-	fldc := fle.GetComponent(types.Draw).(*cmp.Draw)
+	flpc := fle.GetComponent(types.Pos).(*components.Pos)
+	fldc := fle.GetComponent(types.Draw).(*components.Draw)
 
 	flpc.X = pc.X - 40
 
@@ -63,7 +63,7 @@ func (s *PlayerPlay) Update(ai *cmp.AI, e types.IEntity) {
 
 	flpc.Y = pc.Y + 10
 
-	fdc := fle.GetComponent(types.Draw).(*cmp.Draw)
+	fdc := fle.GetComponent(types.Draw).(*components.Draw)
 
 	if ebiten.IsKeyPressed(defs.KeyMap[types.Reverse]) {
 		if !sc.ReversePressed {

@@ -1,7 +1,7 @@
 package gamestate
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -21,10 +21,10 @@ func (s *GamePlay) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *GamePlay) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *GamePlay) Enter(ai *components.AI, e types.IEntity) {
 }
 
-func (s *GamePlay) Update(ai *cmp.AI, e types.IEntity) {
+func (s *GamePlay) Update(ai *components.AI, e types.IEntity) {
 
 	if defs.LandersKilled == defs.CurrentLevel().LanderCount {
 		ai.NextState = types.GameLevelEnd

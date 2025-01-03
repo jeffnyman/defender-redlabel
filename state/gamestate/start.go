@@ -1,7 +1,7 @@
 package gamestate
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
@@ -19,10 +19,10 @@ func (s *GameStart) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *GameStart) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *GameStart) Enter(ai *components.AI, e types.IEntity) {
 	e.GetEngine().LevelStart()
 }
 
-func (s *GameStart) Update(ai *cmp.AI, e types.IEntity) {
+func (s *GameStart) Update(ai *components.AI, e types.IEntity) {
 	ai.NextState = types.GamePlay
 }

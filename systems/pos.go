@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -49,7 +49,7 @@ func (pos *PosSystem) Update() {
 func (pos *PosSystem) Draw(screen *ebiten.Image) {}
 
 func (pos *PosSystem) process(e types.IEntity) {
-	poscmp := e.GetComponent(types.Pos).(*cmp.Pos)
+	poscmp := e.GetComponent(types.Pos).(*components.Pos)
 
 	if poscmp.Y == 9999 || poscmp.ScreenCoords {
 		return

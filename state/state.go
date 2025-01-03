@@ -1,12 +1,12 @@
 package state
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/types"
 )
 
 type IState interface {
 	GetName() types.StateType
-	Enter(ai *cmp.AI, e types.IEntity)
-	Update(ai *cmp.AI, e types.IEntity)
+	Enter(ai *components.AI, e types.IEntity)
+	Update(ai *components.AI, e types.IEntity)
 }

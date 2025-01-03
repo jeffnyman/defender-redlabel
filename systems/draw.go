@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"image"
 
@@ -48,7 +48,7 @@ func (ds *DrawSystem) Draw(screen *ebiten.Image) {
 
 	for _, e := range ds.targets {
 		if e.Active() {
-			dc := e.GetComponent(types.Draw).(*cmp.Draw)
+			dc := e.GetComponent(types.Draw).(*components.Draw)
 
 			if dc.Hide {
 				continue
@@ -59,8 +59,8 @@ func (ds *DrawSystem) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (ds *DrawSystem) process(dc *cmp.Draw, e types.IEntity, screen *ebiten.Image) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (ds *DrawSystem) process(dc *components.Draw, e types.IEntity, screen *ebiten.Image) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	op := dc.Opts
 	frames := dc.SpriteMap.Anim_frames
 	fw, fh := dc.SpriteMap.Frame.W/frames, dc.SpriteMap.Frame.H
@@ -100,7 +100,7 @@ func (ds *DrawSystem) process(dc *cmp.Draw, e types.IEntity, screen *ebiten.Imag
 	}
 }
 
-func (ds *DrawSystem) DrawBomber(si *ebiten.Image, screenx float64, y float64, dc *cmp.Draw, op *ebiten.DrawImageOptions, screen *ebiten.Image) {
+func (ds *DrawSystem) DrawBomber(si *ebiten.Image, screenx float64, y float64, dc *components.Draw, op *ebiten.DrawImageOptions, screen *ebiten.Image) {
 	ds.Cycle(dc, 0.1)
 	ds.Cycle(dc, 0.1)
 	op.GeoM.Reset()
@@ -115,7 +115,7 @@ func (ds *DrawSystem) DrawBomber(si *ebiten.Image, screenx float64, y float64, d
 	screen.DrawImage(si, op)
 }
 
-func (ds *DrawSystem) DrawDisperse(x, y float64, sx, sy, fw, fh int, dc *cmp.Draw, op *ebiten.DrawImageOptions, screen *ebiten.Image) {
+func (ds *DrawSystem) DrawDisperse(x, y float64, sx, sy, fw, fh int, dc *components.Draw, op *ebiten.DrawImageOptions, screen *ebiten.Image) {
 	for i := 0; i < 9; i++ {
 		for j := 0; j < 9; j++ {
 			x := x + (float64(i-4) * dc.Disperse)
@@ -134,7 +134,7 @@ func (ds *DrawSystem) DrawDisperse(x, y float64, sx, sy, fw, fh int, dc *cmp.Dra
 	}
 }
 
-func (ds *DrawSystem) Cycle(drawcmp *cmp.Draw, v float64) {
+func (ds *DrawSystem) Cycle(drawcmp *components.Draw, v float64) {
 	if drawcmp.Cycle {
 		drawcmp.CycleIndex += v
 		c := defs.Cols[int(drawcmp.CycleIndex)%5]

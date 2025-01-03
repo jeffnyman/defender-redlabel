@@ -3,7 +3,7 @@ package game
 import (
 	"fmt"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/logger"
@@ -256,9 +256,9 @@ func (eng *Engine) TriggerBullet(x, y, dx, dy float64) {
 	for _, v := range eng.bulletPool {
 		if !v.Active() {
 			v.SetActive(true)
-			pc := v.GetComponent(types.Pos).(*cmp.Pos)
+			pc := v.GetComponent(types.Pos).(*components.Pos)
 			pc.X, pc.Y, pc.DX, pc.DY = x, y, dx, dy
-			lc := v.GetComponent(types.Life).(*cmp.Life)
+			lc := v.GetComponent(types.Life).(*components.Life)
 			lc.TicksToLive = 120
 			break
 		}
@@ -269,9 +269,9 @@ func (eng *Engine) TriggerBomb(x, y float64) {
 	for _, v := range eng.bombPool {
 		if !v.Active() {
 			v.SetActive(true)
-			pc := v.GetComponent(types.Pos).(*cmp.Pos)
+			pc := v.GetComponent(types.Pos).(*components.Pos)
 			pc.X, pc.Y, pc.DX, pc.DY = x, y, 0, 0
-			lc := v.GetComponent(types.Life).(*cmp.Life)
+			lc := v.GetComponent(types.Life).(*components.Life)
 			lc.TicksToLive = 320
 			break
 		}
@@ -282,13 +282,13 @@ func (eng *Engine) TriggerLaser(x, y, dx float64) {
 	for _, v := range eng.laserPool {
 		if !v.Active() {
 			v.SetActive(true)
-			pc := v.GetComponent(types.Pos).(*cmp.Pos)
+			pc := v.GetComponent(types.Pos).(*components.Pos)
 			pc.X, pc.Y, pc.DX, pc.DY = x, y, dx, 0
-			lc := v.GetComponent(types.Life).(*cmp.Life)
+			lc := v.GetComponent(types.Life).(*components.Life)
 			lc.TicksToLive = 90
-			dc := v.GetComponent(types.LaserDraw).(*cmp.LaserDraw)
+			dc := v.GetComponent(types.LaserDraw).(*components.LaserDraw)
 			dc.Color = defs.LaserCols[eng.laserColIdx%15]
-			mv := v.GetComponent(types.LaserMove).(*cmp.LaserMove)
+			mv := v.GetComponent(types.LaserMove).(*components.LaserMove)
 			mv.Length = 0
 			eng.laserColIdx++
 			break
@@ -327,7 +327,7 @@ func (eng *Engine) Kill(e types.IEntity) {
 		return
 	}
 
-	ai := e.GetComponent(types.AI).(*cmp.AI)
+	ai := e.GetComponent(types.AI).(*components.AI)
 
 	switch e.GetClass() {
 	case types.Lander:
@@ -356,7 +356,7 @@ func (eng *Engine) SmartBomb() {
 		e := eng.entities[id]
 
 		if e.Active() && e.GetClass() != types.Human {
-			pc := e.GetComponent(types.Pos).(*cmp.Pos)
+			pc := e.GetComponent(types.Pos).(*components.Pos)
 
 			if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) {
 				eng.Kill(e)
@@ -374,7 +374,7 @@ func (eng *Engine) MutateAll() {
 
 	for _, id := range landers {
 		e := eng.GetEntity(id)
-		ai := e.GetComponent(types.AI).(*cmp.AI)
+		ai := e.GetComponent(types.AI).(*components.AI)
 		ai.NextState = types.LanderMutate
 	}
 }
@@ -450,7 +450,7 @@ func (eng *Engine) LevelStart() {
 func (eng *Engine) UpdateHUD() {
 	for i := 0; i < 5; i++ {
 		pl := eng.lives[i]
-		dc := pl.GetComponent(types.Draw).(*cmp.Draw)
+		dc := pl.GetComponent(types.Draw).(*components.Draw)
 
 		if i >= defs.PlayerLives-1 {
 			dc.Hide = true
@@ -459,7 +459,7 @@ func (eng *Engine) UpdateHUD() {
 		}
 
 		sb := eng.bombs[i]
-		dc = sb.GetComponent(types.Draw).(*cmp.Draw)
+		dc = sb.GetComponent(types.Draw).(*components.Draw)
 
 		if i >= defs.SmartBombs {
 			dc.Hide = true

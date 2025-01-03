@@ -1,4 +1,4 @@
-package cmp
+package components
 
 import "github.com/jeffnyman/defender-redlabel/types"
 

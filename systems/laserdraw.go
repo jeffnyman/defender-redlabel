@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"image/color"
 	"math/rand"
@@ -60,9 +60,9 @@ func (lds *LaserDrawSystem) Draw(screen *ebiten.Image) {
 }
 
 func (lds *LaserDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
-	ldc := e.GetComponent(types.LaserDraw).(*cmp.LaserDraw)
-	lasmov := e.GetComponent(types.LaserMove).(*cmp.LaserMove)
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+	ldc := e.GetComponent(types.LaserDraw).(*components.LaserDraw)
+	lasmov := e.GetComponent(types.LaserMove).(*components.LaserMove)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	c := ldc.Color
 	lds.opts.ColorM.Reset()
 	lds.opts.ColorM.Scale(c.R, c.G, c.B, c.A)

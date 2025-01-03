@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -49,7 +49,7 @@ func (pos *LifeSystem) Update() {
 func (pos *LifeSystem) Draw(screen *ebiten.Image) {}
 
 func (pos *LifeSystem) process(e types.IEntity) {
-	cmp := e.GetComponent(types.Life).(*cmp.Life)
+	cmp := e.GetComponent(types.Life).(*components.Life)
 	cmp.TicksToLive--
 
 	if cmp.TicksToLive < 0 {

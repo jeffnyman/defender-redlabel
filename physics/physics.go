@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 )
 
@@ -40,7 +40,7 @@ func RandChoiceS(lst []string) string {
 	return lst[rand.Intn(len(lst))]
 }
 
-func ComputeBullet(firepos, playpos *cmp.Pos, time float64) (float64, float64) {
+func ComputeBullet(firepos, playpos *components.Pos, time float64) (float64, float64) {
 	tt := defs.MaxTPS * time
 	projected_x := playpos.X + (playpos.DX * tt)
 	projected_y := playpos.Y

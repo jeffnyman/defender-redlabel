@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/physics"
@@ -25,19 +25,19 @@ func (s *LanderSearch) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *LanderSearch) Enter(ai *cmp.AI, e types.IEntity) {
-	sh := cmp.NewShootable()
+func (s *LanderSearch) Enter(ai *components.AI, e types.IEntity) {
+	sh := components.NewShootable()
 	e.AddComponent(sh)
-	dr := e.GetComponent(types.Draw).(*cmp.Draw)
+	dr := e.GetComponent(types.Draw).(*components.Draw)
 	smap := dr.SpriteMap
-	cl := cmp.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
+	cl := components.NewCollide(smap.Frame.W/smap.Anim_frames, smap.Frame.H)
 	e.AddComponent(cl)
 }
 
-func (s *LanderSearch) Update(ai *cmp.AI, e types.IEntity) {
+func (s *LanderSearch) Update(ai *components.AI, e types.IEntity) {
 	ai.Counter++
 
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 
 	if ai.Counter > 5 {
 		ai.Counter = 0
@@ -69,16 +69,16 @@ func (s *LanderSearch) Update(ai *cmp.AI, e types.IEntity) {
 
 	// TODO defs bullet rate
 	if !physics.OffScreen(physics.ScreenX(pc.X), pc.Y) && rand.Intn(100) == 0 {
-		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*cmp.Pos)
+		tc := e.GetEngine().GetPlayer().GetComponent(types.Pos).(*components.Pos)
 		bullettime := defs.CurrentLevel().BulletTime
 		dx, dy := physics.ComputeBullet(pc, tc, bullettime)
-		ev := event.NewFireBullet(cmp.NewPos(pc.X, pc.Y, dx, dy))
+		ev := event.NewFireBullet(components.NewPos(pc.X, pc.Y, dx, dy))
 		event.NotifyEvent(ev)
 	}
 
 	if e.Child() != e.GetID() {
 		te := e.GetEngine().GetEntity(e.Child())
-		tpc := te.GetComponent(types.Pos).(*cmp.Pos)
+		tpc := te.GetComponent(types.Pos).(*components.Pos)
 
 		if math.Abs(tpc.X-(pc.X+18)) < 3 {
 			ai.NextState = types.LanderDrop

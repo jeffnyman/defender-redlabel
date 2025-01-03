@@ -1,7 +1,7 @@
 package human
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -21,8 +21,8 @@ func (s *HumanDropping) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *HumanDropping) Enter(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (s *HumanDropping) Enter(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	e.SetParent(-1)
 	pc.DX = 0
 	pc.DY = 0
@@ -31,10 +31,10 @@ func (s *HumanDropping) Enter(ai *cmp.AI, e types.IEntity) {
 	event.NotifyEvent(ev)
 }
 
-func (s *HumanDropping) Update(ai *cmp.AI, e types.IEntity) {
+func (s *HumanDropping) Update(ai *components.AI, e types.IEntity) {
 	ai.Counter++
 
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	pc.DY += 0.1
 
 	if pc.Y > defs.ScreenHeight-e.GetEngine().MountainHeight(pc.X) {

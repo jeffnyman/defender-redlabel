@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/physics"
 
@@ -54,10 +54,10 @@ func (cs *CollideSystem) Update() {
 func (cs *CollideSystem) Draw(screen *ebiten.Image) {}
 
 func (cs *CollideSystem) process(e types.IEntity, player types.IEntity) {
-	ep := e.GetComponent(types.Pos).(*cmp.Pos)
-	ec := e.GetComponent(types.Collide).(*cmp.Collide)
-	ppos := player.GetComponent(types.Pos).(*cmp.Pos)
-	psh := player.GetComponent(types.Ship).(*cmp.Ship)
+	ep := e.GetComponent(types.Pos).(*components.Pos)
+	ec := e.GetComponent(types.Collide).(*components.Collide)
+	ppos := player.GetComponent(types.Pos).(*components.Pos)
+	psh := player.GetComponent(types.Ship).(*components.Ship)
 
 	if physics.Collide(ppos.X, ppos.Y, psh.W, psh.H, ep.X, ep.Y, ec.W, ec.H) {
 		ev := event.NewPlayerCollide(e)

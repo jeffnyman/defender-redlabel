@@ -3,7 +3,7 @@ package systems
 import (
 	"image/color"
 
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/logger"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -93,13 +93,13 @@ func (drawsys *RadarDrawSystem) Draw(screen *ebiten.Image) {
 }
 
 func (drawsys *RadarDrawSystem) process(e types.IEntity, screen *ebiten.Image) {
-	rdc := e.GetComponent(types.RadarDraw).(*cmp.RadarDraw)
+	rdc := e.GetComponent(types.RadarDraw).(*components.RadarDraw)
 
 	if rdc.Hide {
 		return
 	}
 
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	op := rdc.Opts
 	op.GeoM.Reset()
 

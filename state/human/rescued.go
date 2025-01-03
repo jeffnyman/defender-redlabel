@@ -1,7 +1,7 @@
 package human
 
 import (
-	"github.com/jeffnyman/defender-redlabel/cmp"
+	"github.com/jeffnyman/defender-redlabel/components"
 	"github.com/jeffnyman/defender-redlabel/defs"
 	"github.com/jeffnyman/defender-redlabel/event"
 	"github.com/jeffnyman/defender-redlabel/types"
@@ -21,20 +21,20 @@ func (s *HumanRescued) GetName() types.StateType {
 	return s.Name
 }
 
-func (s *HumanRescued) Enter(ai *cmp.AI, e types.IEntity) {
+func (s *HumanRescued) Enter(ai *components.AI, e types.IEntity) {
 	ev := event.NewHumanRescued(e)
 	event.NotifyEvent(ev)
 	e.SetParent(e.GetEngine().GetPlayer().GetID())
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	pc.DX = 0
 	pc.DY = 0
 }
 
-func (s *HumanRescued) Update(ai *cmp.AI, e types.IEntity) {
-	pc := e.GetComponent(types.Pos).(*cmp.Pos)
+func (s *HumanRescued) Update(ai *components.AI, e types.IEntity) {
+	pc := e.GetComponent(types.Pos).(*components.Pos)
 	pe := e.GetEngine().GetEntity(e.Parent())
 
-	pec := pe.GetComponent(types.Pos).(*cmp.Pos)
+	pec := pe.GetComponent(types.Pos).(*components.Pos)
 	pc.Y = pec.Y + 50
 	pc.X = pec.X
 
